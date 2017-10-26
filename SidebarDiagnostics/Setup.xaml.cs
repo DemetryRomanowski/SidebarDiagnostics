@@ -7,8 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
@@ -40,7 +40,7 @@ namespace SidebarDiagnostics
             CurrentPage = page;
         }
 
-        private void Yes_Click(object sender, RoutedEventArgs e)
+        private void Yes_Click(Object sender, RoutedEventArgs e)
         {
             switch (CurrentPage)
             {
@@ -51,7 +51,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void No_Click(object sender, RoutedEventArgs e)
+        private void No_Click(Object sender, RoutedEventArgs e)
         {
             switch (CurrentPage)
             {
@@ -61,7 +61,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void OffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OffsetSlider_ValueChanged(Object sender, RoutedPropertyChangedEventArgs<Double> e)
         {
             if (_cancelReposition != null)
             {
@@ -79,8 +79,8 @@ namespace SidebarDiagnostics
 
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
                 {
-                    Framework.Settings.Instance.XOffset = (int)XOffsetSlider.Value;
-                    Framework.Settings.Instance.YOffset = (int)YOffsetSlider.Value;
+                    Framework.Settings.Instance.XOffset = (Int32)XOffsetSlider.Value;
+                    Framework.Settings.Instance.YOffset = (Int32)YOffsetSlider.Value;
 
                     Sidebar.Reposition();
                 }));
@@ -89,7 +89,7 @@ namespace SidebarDiagnostics
             });
         }
 
-        private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void NumberBox_PreviewTextInput(Object sender, TextCompositionEventArgs e)
         {
             if (new Regex("[^0-9.-]+").IsMatch(e.Text))
             {
@@ -97,19 +97,19 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Settings_Click(Object sender, RoutedEventArgs e)
         {
             _openSettings = true;
 
             Close();
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Close_Click(Object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closed(Object sender, EventArgs e)
         {
             if (Sidebar != null && Sidebar.IsInitialized)
             {
@@ -128,7 +128,7 @@ namespace SidebarDiagnostics
 
         private CancellationTokenSource _cancelReposition { get; set; }
 
-        private bool _openSettings { get; set; } = false;
+        private Boolean _openSettings { get; set; } = false;
 
         public enum Page : byte
         {

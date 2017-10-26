@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace SidebarDiagnostics.Models
 {
     public class UpdateModel : INotifyPropertyChanged
     {
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -14,14 +15,11 @@ namespace SidebarDiagnostics.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private double _progress { get; set; } = 0d;
+        private Double _progress { get; set; } = 0d;
 
-        public double Progress
+        public Double Progress
         {
-            get
-            {
-                return _progress;
-            }
+            get => _progress;
             set
             {
                 _progress = value;
@@ -31,12 +29,6 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        public double ProgressNormalized
-        {
-            get
-            {
-                return _progress / 100d;
-            }
-        }
+        public Double ProgressNormalized => _progress / 100d;
     }
 }

@@ -20,7 +20,7 @@ namespace SidebarDiagnostics
 
         public void Reposition()
         {
-            int _screen;
+            Int32 _screen;
             DockEdge _edge;
             WorkArea _windowWA;
             WorkArea _appbarWA;
@@ -30,7 +30,7 @@ namespace SidebarDiagnostics
             Move(_windowWA);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
             Reposition();
 
@@ -38,7 +38,7 @@ namespace SidebarDiagnostics
             Setup.ShowDialog();
         }
 
-        private void Window_StateChanged(object sender, EventArgs e)
+        private void Window_StateChanged(Object sender, EventArgs e)
         {
             if (WindowState != WindowState.Normal)
             {

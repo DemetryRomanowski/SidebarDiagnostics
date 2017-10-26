@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net;
+using System.Windows.Documents;
 using System.Windows.Threading;
+using SidebarDiagnostics.JsonObjects;
 using SidebarDiagnostics.Monitoring;
 
 namespace SidebarDiagnostics.Models
@@ -19,7 +22,7 @@ namespace SidebarDiagnostics.Models
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -41,6 +44,7 @@ namespace SidebarDiagnostics.Models
         public void Start()
         {
             StartClock();
+            StartLaunchLib();
             StartMonitors();
         }
 
@@ -63,12 +67,9 @@ namespace SidebarDiagnostics.Models
             ResumeMonitors();
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        private void NotifyPropertyChanged(String propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -100,17 +101,49 @@ namespace SidebarDiagnostics.Models
                 return;
             }
 
-            _clockTimer = new DispatcherTimer();
-            _clockTimer.Interval = TimeSpan.FromSeconds(1);
-            _clockTimer.Tick += new EventHandler(ClockTimer_Tick);
+            _clockTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            _clockTimer.Tick += ClockTimer_Tick;
             _clockTimer.Start();
         }
 
+        LaunchLib launch_data;
+        private Launch current_launch;
+
+        private void StartLaunchLib()
+        {
+            ShowLaunch = true;
+            ShowLaunchDate = true;
+            if (!ShowLaunch)
+            {
+                return;
+            }
+            
+
+            using (WebClient client = new WebClient())
+            {
+                launch_data = 
+                    LaunchLib.FromJson(
+                        client.DownloadString(
+                            "https://launchlibrary.net/1.2.2/launch?next=3&mode=list&tbddate=0&tbdtime=0"));
+                current_launch = launch_data.Launches[0];
+            }
+
+            if (launch_data != null)
+            {
+                {
+                    this.LaunchName = $"Next Launch: {current_launch.Name}";
+                    
+                }
+            }
+        }
+        
         private void StartMonitors()
         {
-            _monitorTimer = new DispatcherTimer();
-            _monitorTimer.Interval = TimeSpan.FromMilliseconds(Framework.Settings.Instance.PollingInterval);
-            _monitorTimer.Tick += new EventHandler(MonitorTimer_Tick);
+            _monitorTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(Framework.Settings.Instance.PollingInterval)
+            };
+            _monitorTimer.Tick += MonitorTimer_Tick;
             _monitorTimer.Start();
         }
 
@@ -120,6 +153,20 @@ namespace SidebarDiagnostics.Models
 
             Time = _now.ToString(Framework.Settings.Instance.Clock24HR ? "H:mm:ss" : "h:mm:ss tt");
 
+            if (current_launch != null)
+            {
+                DateTime current_time_utc = DateTime.UtcNow;
+
+                DateTime parsed_utc_time = DateTime.Parse(current_launch.Net.Replace("UTC", "Z"));
+
+                TimeSpan remaining = parsed_utc_time.Subtract(current_time_utc);
+
+                Double hours = Math.Round(remaining.TotalHours, 2);
+                
+                if (ShowLaunchDate)
+                    this.LaunchDate = $"{current_launch.Net}\n T-{hours}:{remaining.Minutes}:{remaining.Seconds}";
+            }
+            
             if (ShowDate)
             {
                 Date = _now.ToString(Framework.Settings.Instance.DateSetting.Format);
@@ -133,34 +180,22 @@ namespace SidebarDiagnostics.Models
 
         private void PauseClock()
         {
-            if (_clockTimer != null)
-            {
-                _clockTimer.Stop();
-            }
+            _clockTimer?.Stop();
         }
 
         private void PauseMonitors()
         {
-            if (_monitorTimer != null)
-            {
-                _monitorTimer.Stop();
-            }
+            _monitorTimer?.Stop();
         }
 
         private void ResumeClock()
         {
-            if (_clockTimer != null)
-            {
-                _clockTimer.Start();
-            }
+            _clockTimer?.Start();
         }
 
         private void ResumeMonitors()
         {
-            if (_monitorTimer != null)
-            {
-                _monitorTimer.Start();
-            }
+            _monitorTimer?.Start();
         }
 
         private void DisposeClock()
@@ -187,24 +222,21 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private void ClockTimer_Tick(object sender, EventArgs e)
+        private void ClockTimer_Tick(Object sender, EventArgs e)
         {
             UpdateClock();
         }
 
-        private void MonitorTimer_Tick(object sender, EventArgs e)
+        private void MonitorTimer_Tick(Object sender, EventArgs e)
         {
             UpdateMonitors();
         }
 
-        private bool _ready { get; set; } = false;
+        private Boolean _ready { get; set; }
 
-        public bool Ready
+        public Boolean Ready
         {
-            get
-            {
-                return _ready;
-            }
+            get => _ready;
             set
             {
                 _ready = value;
@@ -213,14 +245,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _showClock { get; set; }
+        private Boolean _showClock { get; set; }
 
-        public bool ShowClock
+        public Boolean ShowClock
         {
-            get
-            {
-                return _showClock;
-            }
+            get => _showClock;
             set
             {
                 _showClock = value;
@@ -228,15 +257,12 @@ namespace SidebarDiagnostics.Models
                 NotifyPropertyChanged("ShowClock");
             }
         }
+        
+        private String _time { get; set; }
 
-        private string _time { get; set; }
-
-        public string Time
+        public String Time
         {
-            get
-            {
-                return _time;
-            }
+            get => _time;
             set
             {
                 _time = value;
@@ -245,14 +271,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _showDate { get; set; }
+        private Boolean _showDate { get; set; }
 
-        public bool ShowDate
+        public Boolean ShowDate
         {
-            get
-            {
-                return _showDate;
-            }
+            get => _showDate;
             set
             {
                 _showDate = value;
@@ -261,14 +284,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _date { get; set; }
+        private String _date { get; set; }
 
-        public string Date
+        public String Date
         {
-            get
-            {
-                return _date;
-            }
+            get => _date;
             set
             {
                 _date = value;
@@ -276,15 +296,64 @@ namespace SidebarDiagnostics.Models
                 NotifyPropertyChanged("Date");
             }
         }
+        
+        private Boolean _showLaunch { get; set; }
 
+        public Boolean ShowLaunch
+        {
+            get => _showLaunch;
+            set
+            {
+                _showLaunch = value;
+                
+                NotifyPropertyChanged("ShowLaunch");
+            }
+        }
+        
+        private String _launchName { get; set; }
+
+        public String LaunchName
+        {
+            get => _launchName;
+            set
+            {
+                _launchName = value;
+
+                NotifyPropertyChanged("LaunchName");
+            }
+        }
+
+        private Boolean _showLaunchDate { get; set; }
+
+        public Boolean ShowLaunchDate
+        {
+            get => _showLaunchDate;
+            set
+            {
+                _showLaunchDate = value;
+
+                NotifyPropertyChanged("ShowLaunchDate");
+            }
+        }
+
+        private String _launchDate { get; set; }
+
+        public String LaunchDate
+        {
+            get => _launchDate;
+            set
+            {
+                _launchDate = value;
+
+                NotifyPropertyChanged("LaunchDate");
+            }
+        }
+        
         private MonitorManager _monitorManager { get; set; }
 
         public MonitorManager MonitorManager
         {
-            get
-            {
-                return _monitorManager;
-            }
+            get => _monitorManager;
             set
             {
                 _monitorManager = value;
@@ -297,6 +366,6 @@ namespace SidebarDiagnostics.Models
 
         private DispatcherTimer _monitorTimer { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 }

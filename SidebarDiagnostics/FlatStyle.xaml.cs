@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -11,7 +12,7 @@ namespace SidebarDiagnostics.Style
             InitializeComponent();
         }
 
-        private void PART_TITLEBAR_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void PART_TITLEBAR_MouseLeftButtonDown(Object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Border _titlebar = (Border)sender;
 
@@ -26,7 +27,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        private void PART_MINIMIZE_Click(object sender, RoutedEventArgs e)
+        private void PART_MINIMIZE_Click(Object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -41,7 +42,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        private void PART_MAXIMIZE_RESTORE_Click(object sender, RoutedEventArgs e)
+        private void PART_MAXIMIZE_RESTORE_Click(Object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -65,7 +66,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        private void PART_CLOSE_Click(object sender, RoutedEventArgs e)
+        private void PART_CLOSE_Click(Object sender, RoutedEventArgs e)
         {
             Button _button = (Button)sender;
 
@@ -80,7 +81,7 @@ namespace SidebarDiagnostics.Style
             }
         }
 
-        private void PART_RESIZE_BOTRIGHT_DragDelta(object sender, DragDeltaEventArgs e)
+        private void PART_RESIZE_BOTRIGHT_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             Thumb _thumb = (Thumb)sender;
 
@@ -90,14 +91,14 @@ namespace SidebarDiagnostics.Style
 
                 if (_window != null && _window.IsInitialized)
                 {
-                    double _newWidth = _window.Width + e.HorizontalChange;
+                    Double _newWidth = _window.Width + e.HorizontalChange;
 
                     if (_newWidth > 0)
                     {
                         _window.Width = _newWidth > _window.MinWidth ? _newWidth : _window.MinWidth;
                     }
 
-                    double _newHeight = _window.Height + e.VerticalChange;
+                    Double _newHeight = _window.Height + e.VerticalChange;
 
                     if (_newHeight > 0)
                     {
@@ -110,88 +111,52 @@ namespace SidebarDiagnostics.Style
 
     public partial class FlatWindow : Window
     {
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowTitleBar
+        public Boolean ShowTitleBar
         {
-            get
-            {
-                return (bool)GetValue(ShowTitleBarProperty);
-            }
-            set
-            {
-                SetValue(ShowTitleBarProperty, value);
-            }
+            get => (Boolean)GetValue(ShowTitleBarProperty);
+            set => SetValue(ShowTitleBarProperty, value);
         }
 
-        public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register("ShowIcon", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowIconProperty = DependencyProperty.Register("ShowIcon", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowIcon
+        public Boolean ShowIcon
         {
-            get
-            {
-                return (bool)GetValue(ShowIconProperty);
-            }
-            set
-            {
-                SetValue(ShowIconProperty, value);
-            }
+            get => (Boolean)GetValue(ShowIconProperty);
+            set => SetValue(ShowIconProperty, value);
         }
 
-        public static readonly DependencyProperty ShowTitleProperty = DependencyProperty.Register("ShowTitle", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowTitleProperty = DependencyProperty.Register("ShowTitle", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowTitle
+        public Boolean ShowTitle
         {
-            get
-            {
-                return (bool)GetValue(ShowTitleProperty);
-            }
-            set
-            {
-                SetValue(ShowTitleProperty, value);
-            }
+            get => (Boolean)GetValue(ShowTitleProperty);
+            set => SetValue(ShowTitleProperty, value);
         }
 
-        public static readonly DependencyProperty ShowCloseProperty = DependencyProperty.Register("ShowClose", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowCloseProperty = DependencyProperty.Register("ShowClose", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowClose
+        public Boolean ShowClose
         {
-            get
-            {
-                return (bool)GetValue(ShowCloseProperty);
-            }
-            set
-            {
-                SetValue(ShowCloseProperty, value);
-            }
+            get => (Boolean)GetValue(ShowCloseProperty);
+            set => SetValue(ShowCloseProperty, value);
         }
 
-        public static readonly DependencyProperty ShowMaximizeProperty = DependencyProperty.Register("ShowMaximize", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowMaximizeProperty = DependencyProperty.Register("ShowMaximize", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowMaximize
+        public Boolean ShowMaximize
         {
-            get
-            {
-                return (bool)GetValue(ShowMaximizeProperty);
-            }
-            set
-            {
-                SetValue(ShowMaximizeProperty, value);
-            }
+            get => (Boolean)GetValue(ShowMaximizeProperty);
+            set => SetValue(ShowMaximizeProperty, value);
         }
 
-        public static readonly DependencyProperty ShowMinimizeProperty = DependencyProperty.Register("ShowMinimize", typeof(bool), typeof(FlatWindow), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowMinimizeProperty = DependencyProperty.Register("ShowMinimize", typeof(Boolean), typeof(FlatWindow), new UIPropertyMetadata(true));
 
-        public bool ShowMinimize
+        public Boolean ShowMinimize
         {
-            get
-            {
-                return (bool)GetValue(ShowMinimizeProperty);
-            }
-            set
-            {
-                SetValue(ShowMinimizeProperty, value);
-            }
+            get => (Boolean)GetValue(ShowMinimizeProperty);
+            set => SetValue(ShowMinimizeProperty, value);
         }
     }
 }

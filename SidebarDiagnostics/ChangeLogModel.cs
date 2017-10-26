@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Framework;
+using SidebarDiagnostics.Utilities;
 
 namespace SidebarDiagnostics.Models
 {
@@ -12,11 +12,11 @@ namespace SidebarDiagnostics.Models
     {
         public ChangeLogModel(Version version)
         {
-            string _vstring = version.ToString(3);
+            String _vstring = version.ToString(3);
 
-            Title = string.Format("{0} v{1}", Resources.ChangeLogTitle, _vstring);
+            Title = String.Format("{0} v{1}", Resources.ChangeLogTitle, _vstring);
 
-            ChangeLogEntry _log = ChangeLogEntry.Load().FirstOrDefault(e => string.Equals(e.Version, _vstring, StringComparison.OrdinalIgnoreCase));
+            ChangeLogEntry _log = ChangeLogEntry.Load().FirstOrDefault(e => String.Equals(e.Version, _vstring, StringComparison.OrdinalIgnoreCase));
 
             if (_log != null)
             {
@@ -24,11 +24,11 @@ namespace SidebarDiagnostics.Models
             }
             else
             {
-                Changes = new string[0];
+                Changes = new String[0];
             }
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -38,14 +38,11 @@ namespace SidebarDiagnostics.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _title { get; set; }
+        private String _title { get; set; }
 
-        public string Title
+        public String Title
         {
-            get
-            {
-                return _title;
-            }
+            get => _title;
             set
             {
                 _title = value;
@@ -54,14 +51,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string[] _changes { get; set; }
+        private String[] _changes { get; set; }
 
-        public string[] Changes
+        public String[] Changes
         {
-            get
-            {
-                return _changes;
-            }
+            get => _changes;
             set
             {
                 _changes = value;
@@ -78,7 +72,7 @@ namespace SidebarDiagnostics.Models
         {
             ChangeLogEntry[] _return = null;
 
-            string _file = Paths.ChangeLog;
+            String _file = Paths.ChangeLog;
 
             if (File.Exists(_file))
             {
@@ -92,9 +86,9 @@ namespace SidebarDiagnostics.Models
         }
 
         [JsonProperty]
-        public string Version { get; set; }
+        public String Version { get; set; }
 
         [JsonProperty]
-        public string[] Changes { get; set; }
+        public String[] Changes { get; set; }
     }
 }

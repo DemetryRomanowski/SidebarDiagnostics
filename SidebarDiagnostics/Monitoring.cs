@@ -45,7 +45,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -102,7 +102,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -172,7 +172,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private MonitorPanel OHMPanel(MonitorType type, string pathData, HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters, params HardwareType[] hardwareTypes)
+        private MonitorPanel OHMPanel(MonitorType type, String pathData, HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters, params HardwareType[] hardwareTypes)
         {
             return new MonitorPanel(
                 type.GetDescription(),
@@ -208,10 +208,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public MonitorPanel[] MonitorPanels
         {
-            get
-            {
-                return _monitorPanels;
-            }
+            get => _monitorPanels;
             private set
             {
                 _monitorPanels = value;
@@ -224,12 +221,12 @@ namespace SidebarDiagnostics.Monitoring
 
         private IHardware _board { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class MonitorPanel : INotifyPropertyChanged, IDisposable
     {
-        public MonitorPanel(string title, string iconData, params iMonitor[] monitors)
+        public MonitorPanel(String title, String iconData, params iMonitor[] monitors)
         {
             IconPath = Geometry.Parse(iconData);
             Title = title;
@@ -243,7 +240,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -267,7 +264,7 @@ namespace SidebarDiagnostics.Monitoring
             Dispose(false);
         }
         
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -281,10 +278,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public Geometry IconPath
         {
-            get
-            {
-                return _iconPath;
-            }
+            get => _iconPath;
             private set
             {
                 _iconPath = value;
@@ -293,14 +287,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _title { get; set; }
+        private String _title { get; set; }
 
-        public string Title
+        public String Title
         {
-            get
-            {
-                return _title;
-            }
+            get => _title;
             private set
             {
                 _title = value;
@@ -313,10 +304,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public iMonitor[] Monitors
         {
-            get
-            {
-                return _monitors;
-            }
+            get => _monitors;
             private set
             {
                 _monitors = value;
@@ -325,16 +313,16 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public interface iMonitor : INotifyPropertyChanged, IDisposable
     {
-        string ID { get; }
+        String ID { get; }
 
-        string Name { get; }
+        String Name { get; }
 
-        bool ShowName { get; }
+        Boolean ShowName { get; }
 
         iMetric[] Metrics { get; }
 
@@ -343,7 +331,7 @@ namespace SidebarDiagnostics.Monitoring
 
     public class BaseMonitor : iMonitor
     {
-        public BaseMonitor(string id, string name, bool showName)
+        public BaseMonitor(String id, String name, Boolean showName)
         {
             ID = id;
             Name = name;
@@ -356,7 +344,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -387,7 +375,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -397,14 +385,11 @@ namespace SidebarDiagnostics.Monitoring
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _id { get; set; }
+        private String _id { get; set; }
 
-        public string ID
+        public String ID
         {
-            get
-            {
-                return _id;
-            }
+            get => _id;
             protected set
             {
                 _id = value;
@@ -413,14 +398,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _name { get; set; }
+        private String _name { get; set; }
 
-        public string Name
+        public String Name
         {
-            get
-            {
-                return _name;
-            }
+            get => _name;
             protected set
             {
                 _name = value;
@@ -429,14 +411,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _showName { get; set; }
+        private Boolean _showName { get; set; }
 
-        public bool ShowName
+        public Boolean ShowName
         {
-            get
-            {
-                return _showName;
-            }
+            get => _showName;
             protected set
             {
                 _showName = value;
@@ -449,10 +428,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public iMetric[] Metrics
         {
-            get
-            {
-                return _metrics;
-            }
+            get => _metrics;
             protected set
             {
                 _metrics = value;
@@ -461,12 +437,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class OHMMonitor : BaseMonitor
     {
-        public OHMMonitor(MonitorType type, string id, string name, IHardware hardware, IHardware board, MetricConfig[] metrics, ConfigParam[] parameters) : base(id, name, parameters.GetValue<bool>(ParamKey.HardwareNames))
+        public OHMMonitor(MonitorType type, String id, String name, IHardware hardware, IHardware board, MetricConfig[] metrics, ConfigParam[] parameters) : base(id, name, parameters.GetValue<Boolean>(ParamKey.HardwareNames))
         {
             _hardware = hardware;
 
@@ -478,11 +454,11 @@ namespace SidebarDiagnostics.Monitoring
                     InitCPU(
                         board,
                         metrics,
-                        parameters.GetValue<bool>(ParamKey.RoundAll),
-                        parameters.GetValue<bool>(ParamKey.AllCoreClocks),
-                        parameters.GetValue<bool>(ParamKey.UseGHz),
-                        parameters.GetValue<bool>(ParamKey.UseFahrenheit),
-                        parameters.GetValue<int>(ParamKey.TempAlert)
+                        parameters.GetValue<Boolean>(ParamKey.RoundAll),
+                        parameters.GetValue<Boolean>(ParamKey.AllCoreClocks),
+                        parameters.GetValue<Boolean>(ParamKey.UseGHz),
+                        parameters.GetValue<Boolean>(ParamKey.UseFahrenheit),
+                        parameters.GetValue<Int32>(ParamKey.TempAlert)
                         );
                     break;
 
@@ -490,17 +466,17 @@ namespace SidebarDiagnostics.Monitoring
                     InitRAM(
                         board,
                         metrics,
-                        parameters.GetValue<bool>(ParamKey.RoundAll)
+                        parameters.GetValue<Boolean>(ParamKey.RoundAll)
                         );
                     break;
 
                 case MonitorType.GPU:
                     InitGPU(
                         metrics,
-                        parameters.GetValue<bool>(ParamKey.RoundAll),
-                        parameters.GetValue<bool>(ParamKey.UseGHz),
-                        parameters.GetValue<bool>(ParamKey.UseFahrenheit),
-                        parameters.GetValue<int>(ParamKey.TempAlert)
+                        parameters.GetValue<Boolean>(ParamKey.RoundAll),
+                        parameters.GetValue<Boolean>(ParamKey.UseGHz),
+                        parameters.GetValue<Boolean>(ParamKey.UseFahrenheit),
+                        parameters.GetValue<Int32>(ParamKey.TempAlert)
                         );
                     break;
 
@@ -515,7 +491,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(Boolean disposing)
         {
             base.Dispose(disposing);
 
@@ -559,7 +535,7 @@ namespace SidebarDiagnostics.Monitoring
             _hardware.Update();
         }
 
-        private void InitCPU(IHardware board, MetricConfig[] metrics, bool roundAll, bool allCoreClocks, bool useGHz, bool useFahrenheit, double tempAlert)
+        private void InitCPU(IHardware board, MetricConfig[] metrics, Boolean roundAll, Boolean allCoreClocks, Boolean useGHz, Boolean useFahrenheit, Double tempAlert)
         {
             List<OHMMetric> _sensorList = new List<OHMMetric>();
 
@@ -571,13 +547,13 @@ namespace SidebarDiagnostics.Monitoring
                 {
                     if (allCoreClocks)
                     {
-                        for (int i = 1; i <= _coreClocks.Max(s => s.Index); i++)
+                        for (Int32 i = 1; i <= _coreClocks.Max(s => s.Index); i++)
                         {
                             ISensor _coreClock = _coreClocks.Where(s => s.Index == i).FirstOrDefault();
 
                             if (_coreClock != null)
                             {
-                                _sensorList.Add(new OHMMetric(_coreClock, MetricKey.CPUClock, DataType.MHz, string.Format("{0} {1}", Resources.CPUCoreClockLabel, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
+                                _sensorList.Add(new OHMMetric(_coreClock, MetricKey.CPUClock, DataType.MHz, String.Format("{0} {1}", Resources.CPUCoreClockLabel, i - 1), (useGHz ? false : true), 0, (useGHz ? MHzToGHz.Instance : null)));
                             }
                         }
                     }
@@ -655,8 +631,8 @@ namespace SidebarDiagnostics.Monitoring
                 }
             }
 
-            bool _loadEnabled = metrics.IsEnabled(MetricKey.CPULoad);
-            bool _coreLoadEnabled = metrics.IsEnabled(MetricKey.CPUCoreLoad);
+            Boolean _loadEnabled = metrics.IsEnabled(MetricKey.CPULoad);
+            Boolean _coreLoadEnabled = metrics.IsEnabled(MetricKey.CPUCoreLoad);
 
             if (_loadEnabled || _coreLoadEnabled)
             {
@@ -676,13 +652,13 @@ namespace SidebarDiagnostics.Monitoring
 
                     if (_coreLoadEnabled)
                     {
-                        for (int i = 1; i <= _loadSensors.Max(s => s.Index); i++)
+                        for (Int32 i = 1; i <= _loadSensors.Max(s => s.Index); i++)
                         {
                             ISensor _coreLoad = _loadSensors.Where(s => s.Index == i).FirstOrDefault();
 
                             if (_coreLoad != null)
                             {
-                                _sensorList.Add(new OHMMetric(_coreLoad, MetricKey.CPUCoreLoad, DataType.Percent, string.Format("{0} {1}", Resources.CPUCoreLoadLabel, i - 1), roundAll));
+                                _sensorList.Add(new OHMMetric(_coreLoad, MetricKey.CPUCoreLoad, DataType.Percent, String.Format("{0} {1}", Resources.CPUCoreLoadLabel, i - 1), roundAll));
                             }
                         }
                     }
@@ -692,7 +668,7 @@ namespace SidebarDiagnostics.Monitoring
             Metrics = _sensorList.ToArray();
         }
 
-        public void InitRAM(IHardware board, MetricConfig[] metrics, bool roundAll)
+        public void InitRAM(IHardware board, MetricConfig[] metrics, Boolean roundAll)
         {
             List<OHMMetric> _sensorList = new List<OHMMetric>();
 
@@ -759,7 +735,7 @@ namespace SidebarDiagnostics.Monitoring
             Metrics = _sensorList.ToArray();
         }
 
-        public void InitGPU(MetricConfig[] metrics, bool roundAll, bool useGHz, bool useFahrenheit, double tempAlert)
+        public void InitGPU(MetricConfig[] metrics, Boolean roundAll, Boolean useGHz, Boolean useFahrenheit, Double tempAlert)
         {
             List<OHMMetric> _sensorList = new List<OHMMetric>();
 
@@ -838,27 +814,27 @@ namespace SidebarDiagnostics.Monitoring
         
         private IHardware _hardware { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class DriveMonitor : BaseMonitor
     {
-        private const string CATEGORYNAME = "LogicalDisk";
+        private const String CATEGORYNAME = "LogicalDisk";
 
-        private const string FREEMB = "Free Megabytes";
-        private const string PERCENTFREE = "% Free Space";
-        private const string BYTESREADPERSECOND = "Disk Read Bytes/sec";
-        private const string BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
+        private const String FREEMB = "Free Megabytes";
+        private const String PERCENTFREE = "% Free Space";
+        private const String BYTESREADPERSECOND = "Disk Read Bytes/sec";
+        private const String BYTESWRITEPERSECOND = "Disk Write Bytes/sec";
 
-        public DriveMonitor(string id, string name, MetricConfig[] metrics, bool roundAll = false, double usedSpaceAlert = 0) : base(id, name, true)
+        public DriveMonitor(String id, String name, MetricConfig[] metrics, Boolean roundAll = false, Double usedSpaceAlert = 0) : base(id, name, true)
         {
             _loadEnabled = metrics.IsEnabled(MetricKey.DriveLoad);
 
-            bool _loadBarEnabled = metrics.IsEnabled(MetricKey.DriveLoadBar);
-            bool _usedEnabled = metrics.IsEnabled(MetricKey.DriveUsed);
-            bool _freeEnabled = metrics.IsEnabled(MetricKey.DriveFree);
-            bool _readEnabled = metrics.IsEnabled(MetricKey.DriveRead);
-            bool _writeEnabled = metrics.IsEnabled(MetricKey.DriveWrite);
+            Boolean _loadBarEnabled = metrics.IsEnabled(MetricKey.DriveLoadBar);
+            Boolean _usedEnabled = metrics.IsEnabled(MetricKey.DriveUsed);
+            Boolean _freeEnabled = metrics.IsEnabled(MetricKey.DriveFree);
+            Boolean _readEnabled = metrics.IsEnabled(MetricKey.DriveRead);
+            Boolean _writeEnabled = metrics.IsEnabled(MetricKey.DriveWrite);
 
             if (_loadBarEnabled)
             {
@@ -921,7 +897,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(Boolean disposing)
         {
             base.Dispose(disposing);
 
@@ -971,7 +947,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public static IEnumerable<HardwareConfig> GetHardware()
         {
-            string[] _instances;
+            String[] _instances;
 
             try
             {
@@ -979,7 +955,7 @@ namespace SidebarDiagnostics.Monitoring
             }
             catch (InvalidOperationException)
             {
-                _instances = new string[0];
+                _instances = new String[0];
 
                 App.ShowPerformanceCounterError();
             }
@@ -991,8 +967,8 @@ namespace SidebarDiagnostics.Monitoring
 
         public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
         {
-            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
-            int _usedSpaceAlert = parameters.GetValue<int>(ParamKey.UsedSpaceAlert);
+            Boolean _roundAll = parameters.GetValue<Boolean>(ParamKey.RoundAll);
+            Int32 _usedSpaceAlert = parameters.GetValue<Int32>(ParamKey.UsedSpaceAlert);
 
             return (
                 from hw in GetHardware()
@@ -1013,13 +989,13 @@ namespace SidebarDiagnostics.Monitoring
 
             if (_counterFreeMB != null && _counterFreePercent != null)
             {
-                double _freeGB = _counterFreeMB.NextValue() / 1024d;
-                double _freePercent = _counterFreePercent.NextValue();
+                Double _freeGB = _counterFreeMB.NextValue() / 1024d;
+                Double _freePercent = _counterFreePercent.NextValue();
 
-                double _usedPercent = 100d - _freePercent;
+                Double _usedPercent = 100d - _freePercent;
 
-                double _totalGB = _freeGB / (_freePercent / 100d);
-                double _usedGB = _totalGB - _freeGB;
+                Double _totalGB = _freeGB / (_freePercent / 100d);
+                Double _usedGB = _totalGB - _freeGB;
 
                 if (LoadMetric != null)
                 {
@@ -1044,10 +1020,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public State Status
         {
-            get
-            {
-                return _status;
-            }
+            get => _status;
             private set
             {
                 _status = value;
@@ -1060,10 +1033,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public iMetric LoadMetric
         {
-            get
-            {
-                return _loadMetric;
-            }
+            get => _loadMetric;
             private set
             {
                 _loadMetric = value;
@@ -1076,10 +1046,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public iMetric UsedMetric
         {
-            get
-            {
-                return _usedMetric;
-            }
+            get => _usedMetric;
             private set
             {
                 _usedMetric = value;
@@ -1092,10 +1059,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public iMetric FreeMetric
         {
-            get
-            {
-                return _freeMetric;
-            }
+            get => _freeMetric;
             private set
             {
                 _freeMetric = value;
@@ -1123,9 +1087,9 @@ namespace SidebarDiagnostics.Monitoring
 
         private PerformanceCounter _counterFreePercent { get; set; }
 
-        private bool _loadEnabled { get; set; }
+        private Boolean _loadEnabled { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
 
         public enum State : byte
         {
@@ -1137,12 +1101,12 @@ namespace SidebarDiagnostics.Monitoring
 
     public class NetworkMonitor : BaseMonitor
     {
-        private const string CATEGORYNAME = "Network Interface";
+        private const String CATEGORYNAME = "Network Interface";
 
-        private const string BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
-        private const string BYTESSENTPERSECOND = "Bytes Sent/sec";
+        private const String BYTESRECEIVEDPERSECOND = "Bytes Received/sec";
+        private const String BYTESSENTPERSECOND = "Bytes Sent/sec";
 
-        public NetworkMonitor(string id, string name, string extIP, MetricConfig[] metrics, bool showName = true, bool roundAll = false, bool useBytes = false, double bandwidthInAlert = 0, double bandwidthOutAlert = 0) : base(id, name, showName)
+        public NetworkMonitor(String id, String name, String extIP, MetricConfig[] metrics, Boolean showName = true, Boolean roundAll = false, Boolean useBytes = false, Double bandwidthInAlert = 0, Double bandwidthOutAlert = 0) : base(id, name, showName)
         {
             iConverter _converter;
             
@@ -1159,15 +1123,15 @@ namespace SidebarDiagnostics.Monitoring
             
             if (metrics.IsEnabled(MetricKey.NetworkIP))
             {
-                string _ipAddress = GetAdapterIPAddress(name);
+                String _ipAddress = GetAdapterIPAddress(name);
 
-                if (!string.IsNullOrEmpty(_ipAddress))
+                if (!String.IsNullOrEmpty(_ipAddress))
                 {
                     _metrics.Add(new IPMetric(_ipAddress, MetricKey.NetworkIP, DataType.IP));
                 }
             }
 
-            if (!string.IsNullOrEmpty(extIP))
+            if (!String.IsNullOrEmpty(extIP))
             {
                 _metrics.Add(new IPMetric(extIP, MetricKey.NetworkExtIP, DataType.IP));
             }
@@ -1192,7 +1156,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public static IEnumerable<HardwareConfig> GetHardware()
         {
-            string[] _instances;
+            String[] _instances;
 
             try
             {
@@ -1200,7 +1164,7 @@ namespace SidebarDiagnostics.Monitoring
             }
             catch (InvalidOperationException)
             {
-                _instances = new string[0];
+                _instances = new String[0];
 
                 App.ShowPerformanceCounterError();
             }
@@ -1212,13 +1176,13 @@ namespace SidebarDiagnostics.Monitoring
 
         public static iMonitor[] GetInstances(HardwareConfig[] hardwareConfig, MetricConfig[] metrics, ConfigParam[] parameters)
         {
-            bool _showName = parameters.GetValue<bool>(ParamKey.HardwareNames);
-            bool _roundAll = parameters.GetValue<bool>(ParamKey.RoundAll);
-            bool _useBytes = parameters.GetValue<bool>(ParamKey.UseBytes);
-            int _bandwidthInAlert = parameters.GetValue<int>(ParamKey.BandwidthInAlert);
-            int _bandwidthOutAlert = parameters.GetValue<int>(ParamKey.BandwidthOutAlert);
+            Boolean _showName = parameters.GetValue<Boolean>(ParamKey.HardwareNames);
+            Boolean _roundAll = parameters.GetValue<Boolean>(ParamKey.RoundAll);
+            Boolean _useBytes = parameters.GetValue<Boolean>(ParamKey.UseBytes);
+            Int32 _bandwidthInAlert = parameters.GetValue<Int32>(ParamKey.BandwidthInAlert);
+            Int32 _bandwidthOutAlert = parameters.GetValue<Int32>(ParamKey.BandwidthOutAlert);
 
-            string _extIP = null;
+            String _extIP = null;
 
             if (metrics.IsEnabled(MetricKey.NetworkExtIP))
             {
@@ -1245,12 +1209,12 @@ namespace SidebarDiagnostics.Monitoring
             base.Update();
         }
 
-        private static string GetAdapterIPAddress(string name)
+        private static String GetAdapterIPAddress(String name)
         {
             //Here we need to match the apdapter returned by the network interface to the
             //adapter represented by this instance of the class.
 
-            string configuredName = Regex.Replace(name, @"[^\w\d\s]", "");
+            String configuredName = Regex.Replace(name, @"[^\w\d\s]", "");
 
             foreach (NetworkInterface netif in NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -1262,8 +1226,8 @@ namespace SidebarDiagnostics.Monitoring
                 //in others the Name is what matches.  It's a little weird, but this will pick up all 4 network adapters on 
                 //my test machine correctly.
 
-                string interfaceDesc = Regex.Replace(netif.Description, @"[^\w\d\s]", "");
-                string interfaceName = Regex.Replace(netif.Name, @"[^\w\d\s]", "");
+                String interfaceDesc = Regex.Replace(netif.Description, @"[^\w\d\s]", "");
+                String interfaceName = Regex.Replace(netif.Name, @"[^\w\d\s]", "");
 
                 if (interfaceDesc == configuredName || interfaceName == configuredName)
                 {
@@ -1282,7 +1246,7 @@ namespace SidebarDiagnostics.Monitoring
             return null;
         }
 
-        private static string GetExternalIPAddress()
+        private static String GetExternalIPAddress()
         {
             try
             {
@@ -1312,32 +1276,32 @@ namespace SidebarDiagnostics.Monitoring
     {
         MetricKey Key { get; }
 
-        string FullName { get; }
+        String FullName { get; }
 
-        string Label { get; }
+        String Label { get; }
 
-        double Value { get; }
+        Double Value { get; }
 
-        string Append { get; }
+        String Append { get; }
 
-        double nValue { get; }
+        Double nValue { get; }
 
-        string nAppend { get; }
+        String nAppend { get; }
 
-        string Text { get; }
+        String Text { get; }
 
-        bool IsAlert { get; }
+        Boolean IsAlert { get; }
 
-        bool IsNumeric { get; }
+        Boolean IsNumeric { get; }
 
         void Update();
 
-        void Update(double value);
+        void Update(Double value);
     }
 
     public class BaseMetric : iMetric
     {
-        public BaseMetric(MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null)
+        public BaseMetric(MetricKey key, DataType dataType, String label = null, Boolean round = false, Double alertValue = 0, iConverter converter = null)
         {
             _converter = converter;
             _round = round;
@@ -1364,7 +1328,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -1390,9 +1354,9 @@ namespace SidebarDiagnostics.Monitoring
 
         public virtual void Update() { }
 
-        public void Update(double value)
+        public void Update(Double value)
         {
-            double _val = value;
+            Double _val = value;
 
             if (_converter == null)
             {
@@ -1400,7 +1364,7 @@ namespace SidebarDiagnostics.Monitoring
             }
             else if (_converter.IsDynamic)
             {
-                double _nVal;
+                Double _nVal;
                 DataType _dataType;
 
                 _converter.Convert(ref _val, out _nVal, out _dataType);
@@ -1429,14 +1393,14 @@ namespace SidebarDiagnostics.Monitoring
                 IsAlert = false;
             }
 
-            Text = string.Format(
+            Text = String.Format(
                 "{0:#,##0.##}{1}",
                 _val.Round(_round),
                 Append
                 );
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -1450,10 +1414,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public MetricKey Key
         {
-            get
-            {
-                return _key;
-            }
+            get => _key;
             protected set
             {
                 _key = value;
@@ -1462,14 +1423,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _fullName { get; set; }
+        private String _fullName { get; set; }
 
-        public string FullName
+        public String FullName
         {
-            get
-            {
-                return _fullName;
-            }
+            get => _fullName;
             protected set
             {
                 _fullName = value;
@@ -1478,14 +1436,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _label { get; set; }
+        private String _label { get; set; }
 
-        public string Label
+        public String Label
         {
-            get
-            {
-                return _label;
-            }
+            get => _label;
             protected set
             {
                 _label = value;
@@ -1494,14 +1449,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private double _value { get; set; }
+        private Double _value { get; set; }
 
-        public double Value
+        public Double Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             protected set
             {
                 _value = value;
@@ -1510,14 +1462,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _append { get; set; }
+        private String _append { get; set; }
 
-        public string Append
+        public String Append
         {
-            get
-            {
-                return _append;
-            }
+            get => _append;
             protected set
             {
                 _append = value;
@@ -1526,14 +1475,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private double _nValue { get; set; }
+        private Double _nValue { get; set; }
 
-        public double nValue
+        public Double nValue
         {
-            get
-            {
-                return _nValue;
-            }
+            get => _nValue;
             set
             {
                 _nValue = value;
@@ -1542,14 +1488,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _nAppend { get; set; }
+        private String _nAppend { get; set; }
 
-        public string nAppend
+        public String nAppend
         {
-            get
-            {
-                return _nAppend;
-            }
+            get => _nAppend;
             set
             {
                 _nAppend = value;
@@ -1558,14 +1501,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _text { get; set; }
+        private String _text { get; set; }
 
-        public string Text
+        public String Text
         {
-            get
-            {
-                return _text;
-            }
+            get => _text;
             protected set
             {
                 _text = value;
@@ -1574,14 +1514,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _isAlert { get; set; }
+        private Boolean _isAlert { get; set; }
 
-        public bool IsAlert
+        public Boolean IsAlert
         {
-            get
-            {
-                return _isAlert;
-            }
+            get => _isAlert;
             protected set
             {
                 _isAlert = value;
@@ -1608,42 +1545,33 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public virtual bool IsNumeric
-        {
-            get { return true; }
-        }
+        public virtual Boolean IsNumeric => true;
 
-        public string AlertColor
-        {
-            get
-            {
-                return _alertColorFlag ? Framework.Settings.Instance.FontColor : Framework.Settings.Instance.AlertFontColor;
-            }
-        }
+        public String AlertColor => _alertColorFlag ? Framework.Settings.Instance.FontColor : Framework.Settings.Instance.AlertFontColor;
 
         private DispatcherTimer _alertColorTimer;
 
-        private void AlertColorTimer_Tick(object sender, EventArgs e)
+        private void AlertColorTimer_Tick(Object sender, EventArgs e)
         {
             _alertColorFlag = !_alertColorFlag;
 
             NotifyPropertyChanged("AlertColor");
         }
 
-        private bool _alertColorFlag = false;
+        private Boolean _alertColorFlag = false;
 
         protected iConverter _converter { get; set; }
 
-        protected bool _round { get; set; }
+        protected Boolean _round { get; set; }
 
-        protected double _alertValue { get; set; }
+        protected Double _alertValue { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class OHMMetric : BaseMetric
     {
-        public OHMMetric(ISensor sensor, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
+        public OHMMetric(ISensor sensor, MetricKey key, DataType dataType, String label = null, Boolean round = false, Double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
             _sensor = sensor;
         }
@@ -1654,7 +1582,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(Boolean disposing)
         {
             base.Dispose(disposing);
 
@@ -1688,12 +1616,12 @@ namespace SidebarDiagnostics.Monitoring
 
         private ISensor _sensor { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class IPMetric : BaseMetric
     {
-        public IPMetric(string ipAddress, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
+        public IPMetric(String ipAddress, MetricKey key, DataType dataType, String label = null, Boolean round = false, Double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
             Text = ipAddress;
         }
@@ -1709,15 +1637,12 @@ namespace SidebarDiagnostics.Monitoring
             Dispose(false);
         }
 
-        public override bool IsNumeric
-        {
-            get { return false; }
-        }
+        public override Boolean IsNumeric => false;
     }
 
     public class PCMetric : BaseMetric
     {
-        public PCMetric(PerformanceCounter counter, MetricKey key, DataType dataType, string label = null, bool round = false, double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
+        public PCMetric(PerformanceCounter counter, MetricKey key, DataType dataType, String label = null, Boolean round = false, Double alertValue = 0, iConverter converter = null) : base(key, dataType, label, round, alertValue, converter)
         {
             _counter = counter;
         }
@@ -1728,7 +1653,7 @@ namespace SidebarDiagnostics.Monitoring
             GC.SuppressFinalize(this);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(Boolean disposing)
         {
             base.Dispose(disposing);
 
@@ -1759,7 +1684,7 @@ namespace SidebarDiagnostics.Monitoring
 
         private PerformanceCounter _counter { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     [Serializable]
@@ -1775,7 +1700,7 @@ namespace SidebarDiagnostics.Monitoring
     [JsonObject(MemberSerialization.OptIn)]
     public class MonitorConfig : INotifyPropertyChanged, ICloneable
     {
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -1799,7 +1724,7 @@ namespace SidebarDiagnostics.Monitoring
             return _clone;
         }
 
-        object ICloneable.Clone()
+        Object ICloneable.Clone()
         {
             return Clone();
         }
@@ -1809,10 +1734,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public MonitorType Type
         {
-            get
-            {
-                return _type;
-            }
+            get => _type;
             set
             {
                 _type = value;
@@ -1821,15 +1743,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _enabled { get; set; }
+        private Boolean _enabled { get; set; }
 
         [JsonProperty]
-        public bool Enabled
+        public Boolean Enabled
         {
-            get
-            {
-                return _enabled;
-            }
+            get => _enabled;
             set
             {
                 _enabled = value;
@@ -1838,15 +1757,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private byte _order { get; set; }
+        private Byte _order { get; set; }
 
         [JsonProperty]
-        public byte Order
+        public Byte Order
         {
-            get
-            {
-                return _order;
-            }
+            get => _order;
             set
             {
                 _order = value;
@@ -1860,10 +1776,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public HardwareConfig[] Hardware
         {
-            get
-            {
-                return _hardware;
-            }
+            get => _hardware;
             set
             {
                 _hardware = value;
@@ -1876,10 +1789,7 @@ namespace SidebarDiagnostics.Monitoring
 
         public ObservableCollection<HardwareConfig> HardwareOC
         {
-            get
-            {
-                return _hardwareOC;
-            }
+            get => _hardwareOC;
             set
             {
                 _hardwareOC = value;
@@ -1893,10 +1803,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public MetricConfig[] Metrics
         {
-            get
-            {
-                return _metrics;
-            }
+            get => _metrics;
             set
             {
                 _metrics = value;
@@ -1910,10 +1817,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public ConfigParam[] Params
         {
-            get
-            {
-                return _params;
-            }
+            get => _params;
             set
             {
                 _params = value;
@@ -1922,13 +1826,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return Type.GetDescription();
-            }
-        }
+        public String Name => Type.GetDescription();
 
         public static MonitorConfig[] CheckConfig(MonitorConfig[] config)
         {
@@ -1987,139 +1885,130 @@ namespace SidebarDiagnostics.Monitoring
             return config;
         }
 
-        public static MonitorConfig[] Default
+        private static MonitorConfig[] Default => new MonitorConfig[5]
         {
-            get
+            new MonitorConfig()
             {
-                return new MonitorConfig[5]
+                Type = MonitorType.CPU,
+                Enabled = true,
+                Order = 5,
+                Hardware = new HardwareConfig[0],
+                Metrics = new MetricConfig[6]
                 {
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.CPU,
-                        Enabled = true,
-                        Order = 5,
-                        Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[6]
-                        {
-                            new MetricConfig(MetricKey.CPUClock, true),
-                            new MetricConfig(MetricKey.CPUTemp, true),
-                            new MetricConfig(MetricKey.CPUVoltage, true),
-                            new MetricConfig(MetricKey.CPUFan, true),
-                            new MetricConfig(MetricKey.CPULoad, true),
-                            new MetricConfig(MetricKey.CPUCoreLoad, true)
-                        },
-                        Params = new ConfigParam[6]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.RoundAll,
-                            ConfigParam.Defaults.AllCoreClocks,
-                            ConfigParam.Defaults.UseGHz,
-                            ConfigParam.Defaults.UseFahrenheit,
-                            ConfigParam.Defaults.TempAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.RAM,
-                        Enabled = true,
-                        Order = 4,
-                        Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[5]
-                        {
-                            new MetricConfig(MetricKey.RAMClock, true),
-                            new MetricConfig(MetricKey.RAMVoltage, true),
-                            new MetricConfig(MetricKey.RAMLoad, true),
-                            new MetricConfig(MetricKey.RAMUsed, true),
-                            new MetricConfig(MetricKey.RAMFree, true)
-                        },
-                        Params = new ConfigParam[2]
-                        {
-                            ConfigParam.Defaults.NoHardwareNames,
-                            ConfigParam.Defaults.RoundAll
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.GPU,
-                        Enabled = true,
-                        Order = 3,
-                        Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[7]
-                        {
-                            new MetricConfig(MetricKey.GPUCoreClock, true),
-                            new MetricConfig(MetricKey.GPUVRAMClock, true),
-                            new MetricConfig(MetricKey.GPUCoreLoad, true),
-                            new MetricConfig(MetricKey.GPUVRAMLoad, true),
-                            new MetricConfig(MetricKey.GPUVoltage, true),
-                            new MetricConfig(MetricKey.GPUTemp, true),
-                            new MetricConfig(MetricKey.GPUFan, true)
-                        },
-                        Params = new ConfigParam[5]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.RoundAll,
-                            ConfigParam.Defaults.UseGHz,
-                            ConfigParam.Defaults.UseFahrenheit,
-                            ConfigParam.Defaults.TempAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.HD,
-                        Enabled = true,
-                        Order = 2,
-                        Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[6]
-                        {
-                            new MetricConfig(MetricKey.DriveLoadBar, true),
-                            new MetricConfig(MetricKey.DriveLoad, true),
-                            new MetricConfig(MetricKey.DriveUsed, true),
-                            new MetricConfig(MetricKey.DriveFree, true),
-                            new MetricConfig(MetricKey.DriveRead, true),
-                            new MetricConfig(MetricKey.DriveWrite, true)
-                        },
-                        Params = new ConfigParam[2]
-                        {
-                            ConfigParam.Defaults.RoundAll,
-                            ConfigParam.Defaults.UsedSpaceAlert
-                        }
-                    },
-                    new MonitorConfig()
-                    {
-                        Type = MonitorType.Network,
-                        Enabled = true,
-                        Order = 1,
-                        Hardware = new HardwareConfig[0],
-                        Metrics = new MetricConfig[4]
-                        {
-                            new MetricConfig(MetricKey.NetworkIP, true),
-                            new MetricConfig(MetricKey.NetworkExtIP, false),
-                            new MetricConfig(MetricKey.NetworkIn, true),
-                            new MetricConfig(MetricKey.NetworkOut, true)
-                        },
-                        Params = new ConfigParam[5]
-                        {
-                            ConfigParam.Defaults.HardwareNames,
-                            ConfigParam.Defaults.RoundAll,
-                            ConfigParam.Defaults.UseBytes,
-                            ConfigParam.Defaults.BandwidthInAlert,
-                            ConfigParam.Defaults.BandwidthOutAlert
-                        }
-                    }
-                };
+                    new MetricConfig(MetricKey.CPUClock, true),
+                    new MetricConfig(MetricKey.CPUTemp, true),
+                    new MetricConfig(MetricKey.CPUVoltage, true),
+                    new MetricConfig(MetricKey.CPUFan, true),
+                    new MetricConfig(MetricKey.CPULoad, true),
+                    new MetricConfig(MetricKey.CPUCoreLoad, true)
+                },
+                Params = new ConfigParam[6]
+                {
+                    ConfigParam.Defaults.HardwareNames,
+                    ConfigParam.Defaults.RoundAll,
+                    ConfigParam.Defaults.AllCoreClocks,
+                    ConfigParam.Defaults.UseGHz,
+                    ConfigParam.Defaults.UseFahrenheit,
+                    ConfigParam.Defaults.TempAlert
+                }
+            },
+            new MonitorConfig()
+            {
+                Type = MonitorType.RAM,
+                Enabled = true,
+                Order = 4,
+                Hardware = new HardwareConfig[0],
+                Metrics = new MetricConfig[5]
+                {
+                    new MetricConfig(MetricKey.RAMClock, true),
+                    new MetricConfig(MetricKey.RAMVoltage, true),
+                    new MetricConfig(MetricKey.RAMLoad, true),
+                    new MetricConfig(MetricKey.RAMUsed, true),
+                    new MetricConfig(MetricKey.RAMFree, true)
+                },
+                Params = new ConfigParam[2]
+                {
+                    ConfigParam.Defaults.NoHardwareNames,
+                    ConfigParam.Defaults.RoundAll
+                }
+            },
+            new MonitorConfig()
+            {
+                Type = MonitorType.GPU,
+                Enabled = true,
+                Order = 3,
+                Hardware = new HardwareConfig[0],
+                Metrics = new MetricConfig[7]
+                {
+                    new MetricConfig(MetricKey.GPUCoreClock, true),
+                    new MetricConfig(MetricKey.GPUVRAMClock, true),
+                    new MetricConfig(MetricKey.GPUCoreLoad, true),
+                    new MetricConfig(MetricKey.GPUVRAMLoad, true),
+                    new MetricConfig(MetricKey.GPUVoltage, true),
+                    new MetricConfig(MetricKey.GPUTemp, true),
+                    new MetricConfig(MetricKey.GPUFan, true)
+                },
+                Params = new ConfigParam[5]
+                {
+                    ConfigParam.Defaults.HardwareNames,
+                    ConfigParam.Defaults.RoundAll,
+                    ConfigParam.Defaults.UseGHz,
+                    ConfigParam.Defaults.UseFahrenheit,
+                    ConfigParam.Defaults.TempAlert
+                }
+            },
+            new MonitorConfig()
+            {
+                Type = MonitorType.HD,
+                Enabled = true,
+                Order = 2,
+                Hardware = new HardwareConfig[0],
+                Metrics = new MetricConfig[6]
+                {
+                    new MetricConfig(MetricKey.DriveLoadBar, true),
+                    new MetricConfig(MetricKey.DriveLoad, true),
+                    new MetricConfig(MetricKey.DriveUsed, true),
+                    new MetricConfig(MetricKey.DriveFree, true),
+                    new MetricConfig(MetricKey.DriveRead, true),
+                    new MetricConfig(MetricKey.DriveWrite, true)
+                },
+                Params = new ConfigParam[2]
+                {
+                    ConfigParam.Defaults.RoundAll,
+                    ConfigParam.Defaults.UsedSpaceAlert
+                }
+            },
+            new MonitorConfig()
+            {
+                Type = MonitorType.Network,
+                Enabled = true,
+                Order = 1,
+                Hardware = new HardwareConfig[0],
+                Metrics = new MetricConfig[4]
+                {
+                    new MetricConfig(MetricKey.NetworkIP, true),
+                    new MetricConfig(MetricKey.NetworkExtIP, false),
+                    new MetricConfig(MetricKey.NetworkIn, true),
+                    new MetricConfig(MetricKey.NetworkOut, true)
+                },
+                Params = new ConfigParam[5]
+                {
+                    ConfigParam.Defaults.HardwareNames,
+                    ConfigParam.Defaults.RoundAll,
+                    ConfigParam.Defaults.UseBytes,
+                    ConfigParam.Defaults.BandwidthInAlert,
+                    ConfigParam.Defaults.BandwidthOutAlert
+                }
             }
-        }
+        };
     }
 
     [JsonObject(MemberSerialization.OptIn)]
     public class HardwareConfig : INotifyPropertyChanged, ICloneable
     {
-        public void NotifyPropertyChanged(string propertyName)
+        private void NotifyPropertyChanged(String propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -2129,20 +2018,17 @@ namespace SidebarDiagnostics.Monitoring
             return (HardwareConfig)MemberwiseClone();
         }
 
-        object ICloneable.Clone()
+        Object ICloneable.Clone()
         {
             return Clone();
         }
 
-        private string _id { get; set; }
+        private String _id { get; set; }
 
         [JsonProperty]
-        public string ID
+        public String ID
         {
-            get
-            {
-                return _id;
-            }
+            get => _id;
             set
             {
                 _id = value;
@@ -2151,15 +2037,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _name { get; set; }
+        private String _name { get; set; }
 
         [JsonProperty]
-        public string Name
+        public String Name
         {
-            get
-            {
-                return _name;
-            }
+            get => _name;
             set
             {
                 _name = value;
@@ -2168,15 +2051,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private string _actualName { get; set; }
+        private String _actualName { get; set; }
 
         [JsonProperty]
-        public string ActualName
+        public String ActualName
         {
-            get
-            {
-                return _actualName;
-            }
+            get => _actualName;
             set
             {
                 _actualName = value;
@@ -2185,15 +2065,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _enabled { get; set; } = true;
+        private Boolean _enabled { get; set; } = true;
 
         [JsonProperty]
-        public bool Enabled
+        public Boolean Enabled
         {
-            get
-            {
-                return _enabled;
-            }
+            get => _enabled;
             set
             {
                 _enabled = value;
@@ -2202,15 +2079,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private byte _order { get; set; } = 0;
+        private Byte _order { get; set; } = 0;
 
         [JsonProperty]
-        public byte Order
+        public Byte Order
         {
-            get
-            {
-                return _order;
-            }
+            get => _order;
             set
             {
                 _order = value;
@@ -2225,13 +2099,13 @@ namespace SidebarDiagnostics.Monitoring
     {
         public MetricConfig() { }
 
-        public MetricConfig(MetricKey key, bool enabled)
+        public MetricConfig(MetricKey key, Boolean enabled)
         {
             Key = key;
             Enabled = enabled;
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -2246,7 +2120,7 @@ namespace SidebarDiagnostics.Monitoring
             return (ConfigParam)MemberwiseClone();
         }
 
-        object ICloneable.Clone()
+        Object ICloneable.Clone()
         {
             return Clone();
         }
@@ -2256,10 +2130,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public MetricKey Key
         {
-            get
-            {
-                return _key;
-            }
+            get => _key;
             set
             {
                 _key = value;
@@ -2268,15 +2139,12 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private bool _enabled { get; set; }
+        private Boolean _enabled { get; set; }
 
         [JsonProperty]
-        public bool Enabled
+        public Boolean Enabled
         {
-            get
-            {
-                return _enabled;
-            }
+            get => _enabled;
             set
             {
                 if (_enabled == value)
@@ -2290,13 +2158,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return Key.GetFullName();
-            }
-        }
+        public String Name => Key.GetFullName();
     }
 
     [Serializable]
@@ -2339,7 +2201,7 @@ namespace SidebarDiagnostics.Monitoring
     [JsonObject(MemberSerialization.OptIn)]
     public class ConfigParam : INotifyPropertyChanged, ICloneable
     {
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -2354,7 +2216,7 @@ namespace SidebarDiagnostics.Monitoring
             return (ConfigParam)MemberwiseClone();
         }
 
-        object ICloneable.Clone()
+        Object ICloneable.Clone()
         {
             return Clone();
         }
@@ -2364,10 +2226,7 @@ namespace SidebarDiagnostics.Monitoring
         [JsonProperty]
         public ParamKey Key
         {
-            get
-            {
-                return _key;
-            }
+            get => _key;
             set
             {
                 _key = value;
@@ -2376,18 +2235,15 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        private object _value { get; set; }
+        private Object _value { get; set; }
 
         [JsonProperty]
-        public object Value
+        public Object Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
-                if (value.GetType() == typeof(long))
+                if (value.GetType() == typeof(Int64))
                 {
                     _value = Convert.ToInt32(value);
                 }
@@ -2400,23 +2256,11 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public Type Type
-        {
-            get
-            {
-                return Value.GetType();
-            }
-        }
+        public Type Type => Value.GetType();
 
-        public string TypeString
-        {
-            get
-            {
-                return Type.ToString();
-            }
-        }
+        public String TypeString => Type.ToString();
 
-        public string Name
+        public String Name
         {
             get
             {
@@ -2470,7 +2314,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public string Tooltip
+        public String Tooltip
         {
             get
             {
@@ -2526,125 +2370,35 @@ namespace SidebarDiagnostics.Monitoring
 
         public static class Defaults
         {
-            public static ConfigParam HardwareNames
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.HardwareNames, Value = true };
-                }
-            }
+            public static ConfigParam HardwareNames => new ConfigParam() { Key = ParamKey.HardwareNames, Value = true };
 
-            public static ConfigParam NoHardwareNames
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.HardwareNames, Value = false };
-                }
-            }
+            public static ConfigParam NoHardwareNames => new ConfigParam() { Key = ParamKey.HardwareNames, Value = false };
 
-            public static ConfigParam UseFahrenheit
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.UseFahrenheit, Value = false };
-                }
-            }
+            public static ConfigParam UseFahrenheit => new ConfigParam() { Key = ParamKey.UseFahrenheit, Value = false };
 
-            public static ConfigParam AllCoreClocks
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.AllCoreClocks, Value = false };
-                }
-            }
+            public static ConfigParam AllCoreClocks => new ConfigParam() { Key = ParamKey.AllCoreClocks, Value = false };
 
-            public static ConfigParam CoreLoads
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.CoreLoads, Value = true };
-                }
-            }
+            public static ConfigParam CoreLoads => new ConfigParam() { Key = ParamKey.CoreLoads, Value = true };
 
-            public static ConfigParam TempAlert
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.TempAlert, Value = 0 };
-                }
-            }
+            public static ConfigParam TempAlert => new ConfigParam() { Key = ParamKey.TempAlert, Value = 0 };
 
-            public static ConfigParam DriveDetails
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.DriveDetails, Value = false };
-                }
-            }
+            public static ConfigParam DriveDetails => new ConfigParam() { Key = ParamKey.DriveDetails, Value = false };
 
-            public static ConfigParam UsedSpaceAlert
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.UsedSpaceAlert, Value = 0 };
-                }
-            }
+            public static ConfigParam UsedSpaceAlert => new ConfigParam() { Key = ParamKey.UsedSpaceAlert, Value = 0 };
 
-            public static ConfigParam BandwidthInAlert
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.BandwidthInAlert, Value = 0 };
-                }
-            }
+            public static ConfigParam BandwidthInAlert => new ConfigParam() { Key = ParamKey.BandwidthInAlert, Value = 0 };
 
-            public static ConfigParam BandwidthOutAlert
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.BandwidthOutAlert, Value = 0 };
-                }
-            }
+            public static ConfigParam BandwidthOutAlert => new ConfigParam() { Key = ParamKey.BandwidthOutAlert, Value = 0 };
 
-            public static ConfigParam UseBytes
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.UseBytes, Value = false };
-                }
-            }
+            public static ConfigParam UseBytes => new ConfigParam() { Key = ParamKey.UseBytes, Value = false };
 
-            public static ConfigParam RoundAll
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.RoundAll, Value = false };
-                }
-            }
+            public static ConfigParam RoundAll => new ConfigParam() { Key = ParamKey.RoundAll, Value = false };
 
-            public static ConfigParam ShowDriveSpace
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.DriveSpace, Value = true };
-                }
-            }
+            public static ConfigParam ShowDriveSpace => new ConfigParam() { Key = ParamKey.DriveSpace, Value = true };
 
-            public static ConfigParam ShowDriveIO
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.DriveIO, Value = true };
-                }
-            }
+            public static ConfigParam ShowDriveIO => new ConfigParam() { Key = ParamKey.DriveIO, Value = true };
 
-            public static ConfigParam UseGHz
-            {
-                get
-                {
-                    return new ConfigParam() { Key = ParamKey.UseGHz, Value = false };
-                }
-            }
+            public static ConfigParam UseGHz => new ConfigParam() { Key = ParamKey.UseGHz, Value = false };
         }
     }
 
@@ -2698,46 +2452,34 @@ namespace SidebarDiagnostics.Monitoring
 
     public interface iConverter
     {
-        void Convert(ref double value);
+        void Convert(ref Double value);
 
-        void Convert(ref double value, out double normalized, out DataType targetType);
+        void Convert(ref Double value, out Double normalized, out DataType targetType);
 
         DataType TargetType { get; }
         
-        bool IsDynamic { get; }
+        Boolean IsDynamic { get; }
     }
 
     public class CelciusToFahrenheit : iConverter
     {
         private CelciusToFahrenheit() { }
 
-        public void Convert(ref double value)
+        public void Convert(ref Double value)
         {
             value = value * 1.8d + 32d;
         }
 
-        public void Convert(ref double value, out double normalized, out DataType targetType)
+        public void Convert(ref Double value, out Double normalized, out DataType targetType)
         {
             Convert(ref value);
             normalized = value;
             targetType = TargetType;
         }
 
-        public DataType TargetType
-        {
-            get
-            {
-                return DataType.Fahrenheit;
-            }
-        }
+        public DataType TargetType => DataType.Fahrenheit;
 
-        public bool IsDynamic
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public Boolean IsDynamic => false;
 
         private static CelciusToFahrenheit _instance { get; set; } = null;
 
@@ -2759,33 +2501,21 @@ namespace SidebarDiagnostics.Monitoring
     {
         private MHzToGHz() { }
 
-        public void Convert(ref double value)
+        public void Convert(ref Double value)
         {
             value = value / 1000d;
         }
 
-        public void Convert(ref double value, out double normalized, out DataType targetType)
+        public void Convert(ref Double value, out Double normalized, out DataType targetType)
         {
             Convert(ref value);
             normalized = value;
             targetType = TargetType;
         }
 
-        public DataType TargetType
-        {
-            get
-            {
-                return DataType.GHz;
-            }
-        }
+        public DataType TargetType => DataType.GHz;
 
-        public bool IsDynamic
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public Boolean IsDynamic => false;
 
         private static MHzToGHz _instance { get; set; } = null;
 
@@ -2807,15 +2537,15 @@ namespace SidebarDiagnostics.Monitoring
     {
         private BitsPerSecondConverter() { }
 
-        public void Convert(ref double value)
+        public void Convert(ref Double value)
         {
-            double _normalized;
+            Double _normalized;
             DataType _dataType;
 
             Convert(ref value, out _normalized, out _dataType);
         }
 
-        public void Convert(ref double value, out double normalized, out DataType targetType)
+        public void Convert(ref Double value, out Double normalized, out DataType targetType)
         {
             normalized = value /= 128d;
 
@@ -2838,21 +2568,9 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public DataType TargetType
-        {
-            get
-            {
-                return DataType.kbps;
-            }
-        }
+        public DataType TargetType => DataType.kbps;
 
-        public bool IsDynamic
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public Boolean IsDynamic => true;
 
         private static BitsPerSecondConverter _instance { get; set; } = null;
 
@@ -2874,15 +2592,15 @@ namespace SidebarDiagnostics.Monitoring
     {
         private BytesPerSecondConverter() { }
 
-        public void Convert(ref double value)
+        public void Convert(ref Double value)
         {
-            double _normalized;
+            Double _normalized;
             DataType _dataType;
 
             Convert(ref value, out _normalized, out _dataType);
         }
 
-        public void Convert(ref double value, out double normalized, out DataType targetType)
+        public void Convert(ref Double value, out Double normalized, out DataType targetType)
         {
             normalized = value /= 1024d;
 
@@ -2905,21 +2623,9 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public DataType TargetType
-        {
-            get
-            {
-                return DataType.kBps;
-            }
-        }
+        public DataType TargetType => DataType.kBps;
 
-        public bool IsDynamic
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public Boolean IsDynamic => true;
 
         private static BytesPerSecondConverter _instance { get; set; } = null;
 
@@ -2939,7 +2645,7 @@ namespace SidebarDiagnostics.Monitoring
 
     public static class Extensions
     {
-        public static bool IsEnabled(this MetricConfig[] metrics, MetricKey key)
+        public static Boolean IsEnabled(this MetricConfig[] metrics, MetricKey key)
         {
             return metrics.Any(m => m.Key == key && m.Enabled);
         }
@@ -2962,7 +2668,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public static string GetDescription(this MonitorType type)
+        public static String GetDescription(this MonitorType type)
         {
             switch (type)
             {
@@ -2991,7 +2697,7 @@ namespace SidebarDiagnostics.Monitoring
             return (T)parameters.Single(p => p.Key == key).Value;
         }
 
-        public static string GetFullName(this MetricKey key)
+        public static String GetFullName(this MetricKey key)
         {
             switch (key)
             {
@@ -3084,7 +2790,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public static string GetLabel(this MetricKey key)
+        public static String GetLabel(this MetricKey key)
         {
             switch (key)
             {
@@ -3177,7 +2883,7 @@ namespace SidebarDiagnostics.Monitoring
             }
         }
 
-        public static string GetAppend(this DataType type)
+        public static String GetAppend(this DataType type)
         {
             switch (type)
             {                
@@ -3251,14 +2957,14 @@ namespace SidebarDiagnostics.Monitoring
                     return " F";
 
                 case DataType.IP:
-                    return string.Empty;
+                    return String.Empty;
 
                 default:
                     throw new ArgumentException("Invalid DataType.");
             }
         }
 
-        public static double Round(this double value, bool doRound)
+        public static Double Round(this Double value, Boolean doRound)
         {
             if (!doRound)
             {

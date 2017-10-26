@@ -23,7 +23,7 @@ namespace SidebarDiagnostics.Models
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(Boolean disposing)
         {
             if (!_disposed)
             {
@@ -87,7 +87,7 @@ namespace SidebarDiagnostics.Models
                     new LineSeries()
                     {
                         Title = _metric.FullName,
-                        TrackerFormatString = string.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.FullName, _metric.nAppend),
+                        TrackerFormatString = String.Format("{0}\r\n{{Value:#,##0.##}}{1}\r\n{{Recorded:T}}", _metric.FullName, _metric.nAppend),
                         ItemsSource = _records,
                         DataFieldX = "Recorded",
                         DataFieldY = "Value"
@@ -95,7 +95,7 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -139,7 +139,7 @@ namespace SidebarDiagnostics.Models
             Metrics = new ObservableCollection<iMetric>();
         }
 
-        private void Metrics_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Metrics_CollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
@@ -152,7 +152,7 @@ namespace SidebarDiagnostics.Models
             SetupPlot();
         }
 
-        private void Metric_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Metric_PropertyChanged(Object sender, PropertyChangedEventArgs e)
         {
             if (_disposed)
             {
@@ -192,14 +192,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _title { get; set; } = Resources.GraphTitle;
+        private String _title { get; set; } = Resources.GraphTitle;
 
-        public string Title
+        public String Title
         {
-            get
-            {
-                return _title;
-            }
+            get => _title;
             set
             {
                 _title = value;
@@ -212,10 +209,7 @@ namespace SidebarDiagnostics.Models
 
         public MonitorPanel[] MonitorItems
         {
-            get
-            {
-                return _monitorItems;
-            }
+            get => _monitorItems;
             set
             {
                 _monitorItems = value;
@@ -228,10 +222,7 @@ namespace SidebarDiagnostics.Models
 
         public MonitorPanel Monitor
         {
-            get
-            {
-                return _monitor;
-            }
+            get => _monitor;
             set
             {
                 _monitor = value;
@@ -253,10 +244,7 @@ namespace SidebarDiagnostics.Models
 
         public iMonitor[] HardwareItems
         {
-            get
-            {
-                return _hardwareItems;
-            }
+            get => _hardwareItems;
             set
             {
                 _hardwareItems = value;
@@ -269,10 +257,7 @@ namespace SidebarDiagnostics.Models
 
         public iMonitor Hardware
         {
-            get
-            {
-                return _hardware;
-            }
+            get => _hardware;
             set
             {
                 _hardware = value;
@@ -287,7 +272,7 @@ namespace SidebarDiagnostics.Models
                 {
                     BindMetrics(_hardware.Metrics.Where(m => m.IsNumeric).ToArray());
 
-                    Title = string.Format("{0} - {1}", Resources.GraphTitle, _hardware.Name);
+                    Title = String.Format("{0} - {1}", Resources.GraphTitle, _hardware.Name);
                 }
 
                 NotifyPropertyChanged("Hardware");
@@ -298,10 +283,7 @@ namespace SidebarDiagnostics.Models
 
         public iMetric[] MetricItems
         {
-            get
-            {
-                return _metricItems;
-            }
+            get => _metricItems;
             set
             {
                 _metricItems = value;
@@ -314,10 +296,7 @@ namespace SidebarDiagnostics.Models
 
         public ObservableCollection<iMetric> Metrics
         {
-            get
-            {
-                return _metrics;
-            }
+            get => _metrics;
             set
             {
                 if (_metrics != null)
@@ -341,30 +320,20 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        public DurationItem[] DurationItems
+        public DurationItem[] DurationItems => new DurationItem[5]
         {
-            get
-            {
+            new DurationItem(15, String.Format("15 {0}", Resources.GraphDurationSeconds)),
+            new DurationItem(30, String.Format("30 {0}", Resources.GraphDurationSeconds)),
+            new DurationItem(60, String.Format("1 {0}", Resources.GraphDurationMinute)),
+            new DurationItem(300, String.Format("5 {0}", Resources.GraphDurationMinutes)),
+            new DurationItem(900, String.Format("15 {0}", Resources.GraphDurationMinutes))
+        };
 
-                return new DurationItem[5]
-                {
-                    new DurationItem(15, string.Format("15 {0}", Resources.GraphDurationSeconds)),
-                    new DurationItem(30, string.Format("30 {0}", Resources.GraphDurationSeconds)),
-                    new DurationItem(60, string.Format("1 {0}", Resources.GraphDurationMinute)),
-                    new DurationItem(300, string.Format("5 {0}", Resources.GraphDurationMinutes)),
-                    new DurationItem(900, string.Format("15 {0}", Resources.GraphDurationMinutes))
-                };
-            }
-        }
+        private Int32 _duration { get; set; } = 15;
 
-        private int _duration { get; set; } = 15;
-
-        public int Duration
+        public Int32 Duration
         {
-            get
-            {
-                return _duration;
-            }
+            get => _duration;
             set
             {
                 _duration = value;
@@ -373,14 +342,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _expandConfig { get; set; } = true;
+        private Boolean _expandConfig { get; set; } = true;
 
-        public bool ExpandConfig
+        public Boolean ExpandConfig
         {
-            get
-            {
-                return _expandConfig;
-            }
+            get => _expandConfig;
             set
             {
                 _expandConfig = value;
@@ -393,31 +359,31 @@ namespace SidebarDiagnostics.Models
 
         private Dictionary<iMetric, ObservableCollection<MetricRecord>> _data { get; set; }
 
-        private bool _disposed { get; set; } = false;
+        private Boolean _disposed { get; set; } = false;
     }
 
     public class DurationItem
     {
-        public DurationItem(int seconds, string text)
+        public DurationItem(Int32 seconds, String text)
         {
             Seconds = seconds;
             Text = text;
         }
 
-        public int Seconds { get; set; }
+        public Int32 Seconds { get; set; }
 
-        public string Text { get; set; }
+        public String Text { get; set; }
     }
 
     public class MetricRecord
     {
-        public MetricRecord(double value, DateTime recorded)
+        public MetricRecord(Double value, DateTime recorded)
         {
             Value = value > 0 ? value : 0.001d;
             Recorded = recorded;
         }
 
-        public double Value { get; set; }
+        public Double Value { get; set; }
 
         public DateTime Recorded { get; set; }
     }

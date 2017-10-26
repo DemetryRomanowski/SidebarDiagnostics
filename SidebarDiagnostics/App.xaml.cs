@@ -47,11 +47,11 @@ namespace SidebarDiagnostics
 
             // VERSION
             Version _version = Assembly.GetExecutingAssembly().GetName().Version;
-            string _vstring = _version.ToString(3);
+            String _vstring = _version.ToString(3);
 
             // TRAY ICON
             TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            TrayIcon.ToolTipText = string.Format("{0} v{1}", Framework.Resources.AppName, _vstring);
+            TrayIcon.ToolTipText = String.Format("{0} v{1}", Framework.Resources.AppName, _vstring);
             TrayIcon.TrayContextMenuOpen += TrayIcon_TrayContextMenuOpen;
 
             // START APP
@@ -72,12 +72,12 @@ namespace SidebarDiagnostics
             base.OnExit(e);
         }
 
-        public static void StartApp(bool openSettings)
+        public static void StartApp(Boolean openSettings)
         {
             Version _version = Assembly.GetExecutingAssembly().GetName().Version;
-            string _vstring = _version.ToString(3);
+            String _vstring = _version.ToString(3);
 
-            if (!string.Equals(Framework.Settings.Instance.ChangeLog, _vstring, StringComparison.OrdinalIgnoreCase))
+            if (!String.Equals(Framework.Settings.Instance.ChangeLog, _vstring, StringComparison.OrdinalIgnoreCase))
             {
                 Framework.Settings.Instance.ChangeLog = _vstring;
                 Framework.Settings.Instance.Save();
@@ -138,9 +138,9 @@ namespace SidebarDiagnostics
             new Graph(_sidebar);
         }
 
-        private async Task AppUpdate(bool showInfo)
+        private async Task AppUpdate(Boolean showInfo)
         {
-            string _exe = await SquirrelUpdate(showInfo);
+            String _exe = await SquirrelUpdate(showInfo);
 
             if (_exe != null)
             {
@@ -155,7 +155,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private async Task<string> SquirrelUpdate(bool showInfo)
+        private async Task<String> SquirrelUpdate(Boolean showInfo)
         {
             try
             {
@@ -216,7 +216,7 @@ namespace SidebarDiagnostics
             Framework.Settings.Instance.MonitorConfig = MonitorConfig.CheckConfig(Framework.Settings.Instance.MonitorConfig);
         }
 
-        private void TrayIcon_TrayContextMenuOpen(object sender, RoutedEventArgs e)
+        private void TrayIcon_TrayContextMenuOpen(Object sender, RoutedEventArgs e)
         {
             Monitor _primary = Monitor.GetMonitors().GetPrimary();
 
@@ -224,12 +224,12 @@ namespace SidebarDiagnostics
             TrayIcon.ContextMenu.VerticalOffset *= _primary.InverseScaleY;
         }
 
-        private void Settings_Click(object sender, EventArgs e)
+        private void Settings_Click(Object sender, EventArgs e)
         {
             OpenSettings();
         }
 
-        private void Reload_Click(object sender, EventArgs e)
+        private void Reload_Click(Object sender, EventArgs e)
         {
             Sidebar _sidebar = Sidebar;
 
@@ -241,12 +241,12 @@ namespace SidebarDiagnostics
             _sidebar.Reload();
         }
 
-        private void Graph_Click(object sender, EventArgs e)
+        private void Graph_Click(Object sender, EventArgs e)
         {
             OpenGraph();
         }
 
-        private void Visibility_SubmenuOpened(object sender, EventArgs e)
+        private void Visibility_SubmenuOpened(Object sender, EventArgs e)
         {
             Sidebar _sidebar = Sidebar;
 
@@ -261,7 +261,7 @@ namespace SidebarDiagnostics
             (_this.Items.GetItemAt(1) as MenuItem).IsChecked = _sidebar.Visibility == Visibility.Hidden;
         }
         
-        private void Show_Click(object sender, EventArgs e)
+        private void Show_Click(Object sender, EventArgs e)
         {
             Sidebar _sidebar = Sidebar;
 
@@ -273,7 +273,7 @@ namespace SidebarDiagnostics
             _sidebar.AppBarShow();
         }
 
-        private void Hide_Click(object sender, EventArgs e)
+        private void Hide_Click(Object sender, EventArgs e)
         {
             Sidebar _sidebar = Sidebar;
 
@@ -285,59 +285,41 @@ namespace SidebarDiagnostics
             _sidebar.AppBarHide();
         }
 
-        private void Donate_Click(object sender, RoutedEventArgs e)
+        private void Donate_Click(Object sender, RoutedEventArgs e)
         {
             Process.Start(ConfigurationManager.AppSettings["DonateURL"]);
         }
 
-        private void GitHub_Click(object sender, RoutedEventArgs e)
+        private void GitHub_Click(Object sender, RoutedEventArgs e)
         {
             Process.Start(ConfigurationManager.AppSettings["RepoURL"]);
         }
 
-        private async void Update_Click(object sender, RoutedEventArgs e)
+        private async void Update_Click(Object sender, RoutedEventArgs e)
         {
             await AppUpdate(true);
         }
 
-        private void Close_Click(object sender, EventArgs e)
+        private void Close_Click(Object sender, EventArgs e)
         {
             Shutdown();
         }
         
-        private static void AppDomain_Error(object sender, UnhandledExceptionEventArgs e)
+        private static void AppDomain_Error(Object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = (Exception)e.ExceptionObject;
 
             MessageBox.Show(ex.ToString(), Framework.Resources.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
         
-        public Sidebar Sidebar
-        {
-            get
-            {
-                return Windows.OfType<Sidebar>().FirstOrDefault();
-            }
-        }
+        public Sidebar Sidebar => Windows.OfType<Sidebar>().FirstOrDefault();
 
-        public IEnumerable<Graph> Graphs
-        {
-            get
-            {
-                return Windows.OfType<Graph>();
-            }
-        }
+        public IEnumerable<Graph> Graphs => Windows.OfType<Graph>();
 
-        public new static App Current
-        {
-            get
-            {
-                return (App)Application.Current;
-            }
-        }
+        public new static App Current => (App)Application.Current;
 
         public static TaskbarIcon TrayIcon { get; set; }
 
-        internal static bool _reloading { get; set; } = false;
+        internal static Boolean _reloading { get; set; } = false;
     }
 }

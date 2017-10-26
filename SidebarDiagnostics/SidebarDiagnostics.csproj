@@ -142,6 +142,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\OpenHardwareMonitor\Bin\Release\OpenHardwareMonitorLib.dll</HintPath>
     </Reference>
+    <Reference Include="OpenHardwareMonitorLib, Version=0.8.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\libs\OpenHardwareMonitorLib.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
       <Private>True</Private>
@@ -211,6 +214,9 @@
       <DependentUpon>Graph.xaml</DependentUpon>
     </Compile>
     <Compile Include="GraphModel.cs" />
+    <Compile Include="JsonObjects\LaunchLibraryData.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="Models\SidebarModel.cs" />
     <Compile Include="Properties\Resources.de-CH.Designer.cs">
       <DependentUpon>Resources.de-CH.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -251,7 +257,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SidebarModel.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters.cs" />
@@ -259,7 +264,6 @@
       <DependentUpon>Dummy.xaml</DependentUpon>
     </Compile>
     <Compile Include="Monitoring.cs" />
-    <Compile Include="SettingsModel.cs" />
     <Compile Include="Setup.xaml.cs">
       <DependentUpon>Setup.xaml</DependentUpon>
     </Compile>
@@ -267,15 +271,15 @@
       <DependentUpon>Update.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateModel.cs" />
-    <Compile Include="Windows.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
     <Compile Include="FlatStyle.xaml.cs">
       <DependentUpon>FlatStyle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Windows\Windows.cs" />
     <Page Include="ChangeLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

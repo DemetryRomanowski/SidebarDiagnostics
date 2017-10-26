@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -13,46 +13,28 @@ namespace SidebarDiagnostics.Utilities
 {
     public static class Paths
     {
-        private const string SETTINGS = "settings.json";
-        private const string CHANGELOG = "ChangeLog.json";
+        private const String SETTINGS = "settings.json";
+        private const String CHANGELOG = "ChangeLog.json";
 
-        public static string Install(Version version)
+        public static String Install(Version version)
         {
-            return Path.Combine(LocalApp, string.Format("app-{0}", version.ToString(3)));
+            return Path.Combine(LocalApp, String.Format("app-{0}", version.ToString(3)));
         }
 
-        public static string Exe(Version version)
+        public static String Exe(Version version)
         {
             return Path.Combine(Install(version), ExeName);
         }
 
-        public static string ChangeLog
-        {
-            get
-            {
-                return Path.Combine(CurrentDirectory, CHANGELOG);
-            }
-        }
+        public static String ChangeLog => Path.Combine(CurrentDirectory, CHANGELOG);
 
-        public static string CurrentDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            }
-        }
+        public static String CurrentDirectory => Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
-        public static string TaskBar
-        {
-            get
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar");
-            }
-        }
+        public static String TaskBar => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar");
 
-        private static string _assemblyName { get; set; } = null;
+        private static String _assemblyName { get; set; } = null;
 
-        public static string AssemblyName
+        public static String AssemblyName
         {
             get
             {
@@ -65,24 +47,24 @@ namespace SidebarDiagnostics.Utilities
             }
         }
 
-        private static string _exeName { get; set; } = null;
+        private static String _exeName { get; set; } = null;
 
-        public static string ExeName
+        public static String ExeName
         {
             get
             {
                 if (_exeName == null)
                 {
-                    _exeName = string.Format("{0}.exe", AssemblyName);
+                    _exeName = String.Format("{0}.exe", AssemblyName);
                 }
 
                 return _exeName;
             }
         }
 
-        private static string _settingsFile { get; set; } = null;
+        private static String _settingsFile { get; set; } = null;
 
-        public static string SettingsFile
+        public static String SettingsFile
         {
             get
             {
@@ -95,9 +77,9 @@ namespace SidebarDiagnostics.Utilities
             }
         }
 
-        private static string _localApp { get; set; } = null;
+        private static String _localApp { get; set; } = null;
 
-        public static string LocalApp
+        public static String LocalApp
         {
             get
             {
@@ -113,7 +95,7 @@ namespace SidebarDiagnostics.Utilities
 
     public static class Startup
     {        
-        public static bool StartupTaskExists()
+        public static Boolean StartupTaskExists()
         {
             using (TaskService _taskService = new TaskService())
             {
@@ -135,7 +117,7 @@ namespace SidebarDiagnostics.Utilities
             }
         }
 
-        public static void EnableStartupTask(string exePath = null)
+        public static void EnableStartupTask(String exePath = null)
         {
             using (TaskService _taskService = new TaskService())
             {
@@ -163,21 +145,21 @@ namespace SidebarDiagnostics.Utilities
 
     public static class Culture
     {
-        public const string DEFAULT = "Default";
+        public const String DEFAULT = "Default";
 
         public static void SetDefault()
         {
             Default = Thread.CurrentThread.CurrentUICulture;
         }
 
-        public static void SetCurrent(bool init)
+        public static void SetCurrent(Boolean init)
         {
             SetCurrent(Framework.Settings.Instance.Culture, init);
         }
 
-        public static void SetCurrent(string name, bool init)
+        public static void SetCurrent(String name, Boolean init)
         {
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = string.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = String.Equals(name, DEFAULT, StringComparison.Ordinal) ? Default : new CultureInfo(name);
 
             if (init)
             {
@@ -190,21 +172,15 @@ namespace SidebarDiagnostics.Utilities
             return new CultureItem[1] { new CultureItem() { Value = DEFAULT, Text = Resources.SettingsLanguageDefault } }.Concat(CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => Languages.Contains(c.TwoLetterISOLanguageName)).OrderBy(c => c.DisplayName).Select(c => new CultureItem() { Value = c.Name, Text = c.DisplayName })).ToArray();
         }
 
-        public static string[] Languages
-        {
-            get
-            {
-                return new string[7] { "en", "da", "de", "fr", "ja", "nl", "zh" };
-            }
-        }
+        public static String[] Languages => new String[7] { "en", "da", "de", "fr", "ja", "nl", "zh" };
 
         public static CultureInfo Default { get; private set; }
     }
 
     public class CultureItem
     {
-        public string Value { get; set; }
+        public String Value { get; set; }
 
-        public string Text { get; set; }
+        public String Text { get; set; }
     }
 }

@@ -1,20 +1,23 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using SidebarDiagnostics.Windows;
+using SidebarDiagnostics.JsonObjects;
 using SidebarDiagnostics.Models;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
+    /// <inheritdoc cref="http://www.google.com/" />
     /// <summary>
     /// Interaction logic for Sidebar.xaml
     /// </summary>
     public partial class Sidebar : AppBarWindow
     {
-        public Sidebar(bool openSettings, bool initiallyHidden)
+        public Sidebar(Boolean openSettings, Boolean initiallyHidden)
         {
             InitializeComponent();
 
@@ -36,7 +39,7 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        public async Task Reset(bool enableHotkeys)
+        public async Task Reset(Boolean enableHotkeys)
         {
             if (!Ready)
             {
@@ -105,7 +108,7 @@ namespace SidebarDiagnostics
             await BindModel();
         }
 
-        private void BindSettings(bool enableHotkeys)
+        private void BindSettings(Boolean enableHotkeys)
         {
             BindPosition(null);
 
@@ -162,7 +165,7 @@ namespace SidebarDiagnostics
 
         private void BindPosition(Action callback)
         {
-            int _screen;
+            Int32 _screen;
             DockEdge _edge;
             WorkArea _windowWA;
             WorkArea _appbarWA;
@@ -222,37 +225,38 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void GraphButton_Click(object sender, RoutedEventArgs e)
+        private void GraphButton_Click(Object sender, RoutedEventArgs e)
         {
             App.Current.OpenGraph();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsButton_Click(Object sender, RoutedEventArgs e)
         {
             App.Current.OpenSettings();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(Object sender, RoutedEventArgs e)
         {
             App.Current.Shutdown();
         }
         
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        private void Window_MouseEnter(Object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Visibility.Visible;
         }
 
-        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        private void Window_MouseLeave(Object sender, MouseEventArgs e)
         {
             WindowControls.Visibility = Framework.Settings.Instance.CollapseMenuBar ? Visibility.Collapsed : Visibility.Hidden;
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(Object sender, RoutedEventArgs e)
         {
             await Initialize();
+            
         }
 
-        private void Window_StateChanged(object sender, EventArgs e)
+        private void Window_StateChanged(Object sender, EventArgs e)
         {
             if (WindowState != WindowState.Normal)
             {
@@ -260,7 +264,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(Object sender, CancelEventArgs e)
         {
             Ready = false;
 
@@ -279,7 +283,7 @@ namespace SidebarDiagnostics
             Hotkey.Dispose();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closed(Object sender, EventArgs e)
         {
             if (App._reloading)
             {
@@ -293,14 +297,11 @@ namespace SidebarDiagnostics
             }
         }
 
-        private bool _ready { get; set; } = false;
+        private Boolean _ready { get; set; } = false;
 
-        public bool Ready
+        public Boolean Ready
         {
-            get
-            {
-                return _ready;
-            }
+            get => _ready;
             set
             {
                 _ready = value;
@@ -314,8 +315,8 @@ namespace SidebarDiagnostics
 
         public SidebarModel Model { get; private set; }
 
-        private bool _openSettings { get; set; } = false;
+        private Boolean _openSettings { get; set; } = false;
 
-        private bool _initiallyHidden { get; set; } = false;
+        private Boolean _initiallyHidden { get; set; } = false;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
@@ -18,7 +17,7 @@ namespace SidebarDiagnostics
             DataContext = Model = new ChangeLogModel(version);
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Close_Click(Object sender, RoutedEventArgs e)
         {
             Close();
         }

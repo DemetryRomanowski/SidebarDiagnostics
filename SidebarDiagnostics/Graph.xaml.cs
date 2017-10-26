@@ -1,6 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using System.ComponentModel;
 using SidebarDiagnostics.Style;
 
@@ -21,7 +21,7 @@ namespace SidebarDiagnostics
             Show();
         }
 
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Window_PreviewKeyDown(Object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
@@ -29,7 +29,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(Object sender, CancelEventArgs e)
         {
             DataContext = null;
 

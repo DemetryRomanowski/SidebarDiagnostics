@@ -2,8 +2,8 @@
 using System.IO;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Utilities;
 using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics.Framework
@@ -46,7 +46,7 @@ namespace SidebarDiagnostics.Framework
             return _return ?? new Settings();
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -56,15 +56,12 @@ namespace SidebarDiagnostics.Framework
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _changeLog { get; set; } = null;
+        private String _changeLog { get; set; } = null;
 
         [JsonProperty]
-        public string ChangeLog
+        public String ChangeLog
         {
-            get
-            {
-                return _changeLog;
-            }
+            get => _changeLog;
             set
             {
                 _changeLog = value;
@@ -73,15 +70,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _initialSetup { get; set; } = true;
+        private Boolean _initialSetup { get; set; } = true;
 
         [JsonProperty]
-        public bool InitialSetup
+        public Boolean InitialSetup
         {
-            get
-            {
-                return _initialSetup;
-            }
+            get => _initialSetup;
             set
             {
                 _initialSetup = value;
@@ -95,10 +89,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public DockEdge DockEdge
         {
-            get
-            {
-                return _dockEdge;
-            }
+            get => _dockEdge;
             set
             {
                 _dockEdge = value;
@@ -107,15 +98,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private int _screenIndex { get; set; } = 0;
+        private Int32 _screenIndex { get; set; } = 0;
 
         [JsonProperty]
-        public int ScreenIndex
+        public Int32 ScreenIndex
         {
-            get
-            {
-                return _screenIndex;
-            }
+            get => _screenIndex;
             set
             {
                 _screenIndex = value;
@@ -124,15 +112,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private string _culture { get; set; } = Utilities.Culture.DEFAULT;
+        private String _culture { get; set; } = Utilities.Culture.DEFAULT;
 
         [JsonProperty]
-        public string Culture
+        public String Culture
         {
-            get
-            {
-                return _culture;
-            }
+            get => _culture;
             set
             {
                 _culture = value;
@@ -141,15 +126,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _useAppBar { get; set; } = true;
+        private Boolean _useAppBar { get; set; } = true;
         
         [JsonProperty]
-        public bool UseAppBar
+        public Boolean UseAppBar
         {
-            get
-            {
-                return _useAppBar;
-            }
+            get => _useAppBar;
             set
             {
                 _useAppBar = value;
@@ -158,15 +140,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _alwaysTop { get; set; } = true;
+        private Boolean _alwaysTop { get; set; } = true;
 
         [JsonProperty]
-        public bool AlwaysTop
+        public Boolean AlwaysTop
         {
-            get
-            {
-                return _alwaysTop;
-            }
+            get => _alwaysTop;
             set
             {
                 _alwaysTop = value;
@@ -175,15 +154,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _autoUpdate { get; set; } = true;
+        private Boolean _autoUpdate { get; set; } = true;
 
         [JsonProperty]
-        public bool AutoUpdate
+        public Boolean AutoUpdate
         {
-            get
-            {
-                return _autoUpdate;
-            }
+            get => _autoUpdate;
             set
             {
                 _autoUpdate = value;
@@ -192,15 +168,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _runAtStartup { get; set; } = true;
+        private Boolean _runAtStartup { get; set; } = true;
 
         [JsonProperty]
-        public bool RunAtStartup
+        public Boolean RunAtStartup
         {
-            get
-            {
-                return _runAtStartup;
-            }
+            get => _runAtStartup;
             set
             {
                 _runAtStartup = value;
@@ -209,15 +182,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private double _uiScale { get; set; } = 1d;
+        private Double _uiScale { get; set; } = 1d;
 
         [JsonProperty]
-        public double UIScale
+        public Double UIScale
         {
-            get
-            {
-                return _uiScale;
-            }
+            get => _uiScale;
             set
             {
                 _uiScale = value;
@@ -226,15 +196,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private int _xOffset { get; set; } = 0;
+        private Int32 _xOffset { get; set; } = 0;
 
         [JsonProperty]
-        public int XOffset
+        public Int32 XOffset
         {
-            get
-            {
-                return _xOffset;
-            }
+            get => _xOffset;
             set
             {
                 _xOffset = value;
@@ -243,15 +210,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private int _yOffset { get; set; } = 0;
+        private Int32 _yOffset { get; set; } = 0;
 
         [JsonProperty]
-        public int YOffset
+        public Int32 YOffset
         {
-            get
-            {
-                return _yOffset;
-            }
+            get => _yOffset;
             set
             {
                 _yOffset = value;
@@ -260,15 +224,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private int _pollingInterval { get; set; } = 1000;
+        private Int32 _pollingInterval { get; set; } = 1000;
 
         [JsonProperty]
-        public int PollingInterval
+        public Int32 PollingInterval
         {
-            get
-            {
-                return _pollingInterval;
-            }
+            get => _pollingInterval;
             set
             {
                 _pollingInterval = value;
@@ -277,15 +238,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _toolbarMode { get; set; } = true;
+        private Boolean _toolbarMode { get; set; } = true;
 
         [JsonProperty]
-        public bool ToolbarMode
+        public Boolean ToolbarMode
         {
-            get
-            {
-                return _toolbarMode;
-            }
+            get => _toolbarMode;
             set
             {
                 _toolbarMode = value;
@@ -294,15 +252,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _clickThrough { get; set; } = false;
+        private Boolean _clickThrough { get; set; } = false;
 
         [JsonProperty]
-        public bool ClickThrough
+        public Boolean ClickThrough
         {
-            get
-            {
-                return _clickThrough;
-            }
+            get => _clickThrough;
             set
             {
                 _clickThrough = value;
@@ -311,15 +266,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _showTrayIcon { get; set; } = true;
+        private Boolean _showTrayIcon { get; set; } = true;
 
         [JsonProperty]
-        public bool ShowTrayIcon
+        public Boolean ShowTrayIcon
         {
-            get
-            {
-                return _showTrayIcon;
-            }
+            get => _showTrayIcon;
             set
             {
                 _showTrayIcon = value;
@@ -328,15 +280,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _collapseMenuBar { get; set; } = false;
+        private Boolean _collapseMenuBar { get; set; } = false;
 
         [JsonProperty]
-        public bool CollapseMenuBar
+        public Boolean CollapseMenuBar
         {
-            get
-            {
-                return _collapseMenuBar;
-            }
+            get => _collapseMenuBar;
             set
             {
                 _collapseMenuBar = value;
@@ -345,15 +294,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _initiallyHidden { get; set; } = false;
+        private Boolean _initiallyHidden { get; set; } = false;
 
         [JsonProperty]
-        public bool InitiallyHidden
+        public Boolean InitiallyHidden
         {
-            get
-            {
-                return _initiallyHidden;
-            }
+            get => _initiallyHidden;
             set
             {
                 _initiallyHidden = value;
@@ -362,15 +308,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private int _sidebarWidth { get; set; } = 180;
+        private Int32 _sidebarWidth { get; set; } = 180;
 
         [JsonProperty]
-        public int SidebarWidth
+        public Int32 SidebarWidth
         {
-            get
-            {
-                return _sidebarWidth;
-            }
+            get => _sidebarWidth;
             set
             {
                 _sidebarWidth = value;
@@ -379,15 +322,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _autoBGColor { get; set; } = false;
+        private Boolean _autoBGColor { get; set; } = false;
 
         [JsonProperty]
-        public bool AutoBGColor
+        public Boolean AutoBGColor
         {
-            get
-            {
-                return _autoBGColor;
-            }
+            get => _autoBGColor;
             set
             {
                 _autoBGColor = value;
@@ -396,15 +336,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private string _bgColor { get; set; } = "#000000";
+        private String _bgColor { get; set; } = "#000000";
 
         [JsonProperty]
-        public string BGColor
+        public String BGColor
         {
-            get
-            {
-                return _bgColor;
-            }
+            get => _bgColor;
             set
             {
                 _bgColor = value;
@@ -413,15 +350,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private double _bgOpacity { get; set; } = 0.85d;
+        private Double _bgOpacity { get; set; } = 0.85d;
 
         [JsonProperty]
-        public double BGOpacity
+        public Double BGOpacity
         {
-            get
-            {
-                return _bgOpacity;
-            }
+            get => _bgOpacity;
             set
             {
                 _bgOpacity = value;
@@ -435,10 +369,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public TextAlign TextAlign
         {
-            get
-            {
-                return _textAlign;
-            }
+            get => _textAlign;
             set
             {
                 _textAlign = value;
@@ -452,10 +383,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public FontSetting FontSetting
         {
-            get
-            {
-                return _fontSetting;
-            }
+            get => _fontSetting;
             set
             {
                 _fontSetting = value;
@@ -464,15 +392,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private string _fontColor { get; set; } = "#FFFFFF";
+        private String _fontColor { get; set; } = "#FFFFFF";
         
         [JsonProperty]
-        public string FontColor
+        public String FontColor
         {
-            get
-            {
-                return _fontColor;
-            }
+            get => _fontColor;
             set
             {
                 _fontColor = value;
@@ -481,15 +406,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private string _alertFontColor { get; set; } = "#FF4136";
+        private String _alertFontColor { get; set; } = "#FF4136";
 
         [JsonProperty]
-        public string AlertFontColor
+        public String AlertFontColor
         {
-            get
-            {
-                return _alertFontColor;
-            }
+            get => _alertFontColor;
             set
             {
                 _alertFontColor = value;
@@ -498,15 +420,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _alertBlink { get; set; } = true;
+        private Boolean _alertBlink { get; set; } = true;
 
         [JsonProperty]
-        public bool AlertBlink
+        public Boolean AlertBlink
         {
-            get
-            {
-                return _alertBlink;
-            }
+            get => _alertBlink;
             set
             {
                 _alertBlink = value;
@@ -515,15 +434,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _showClock { get; set; } = true;
+        private Boolean _showClock { get; set; } = true;
 
         [JsonProperty]
-        public bool ShowClock
+        public Boolean ShowClock
         {
-            get
-            {
-                return _showClock;
-            }
+            get => _showClock;
             set
             {
                 _showClock = value;
@@ -532,15 +448,12 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        private bool _clock24HR { get; set; } = false;
+        private Boolean _clock24HR { get; set; } = false;
 
         [JsonProperty]
-        public bool Clock24HR
+        public Boolean Clock24HR
         {
-            get
-            {
-                return _clock24HR;
-            }
+            get => _clock24HR;
             set
             {
                 _clock24HR = value;
@@ -554,10 +467,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public DateSetting DateSetting
         {
-            get
-            {
-                return _dateSetting;
-            }
+            get => _dateSetting;
             set
             {
                 _dateSetting = value;
@@ -571,10 +481,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public MonitorConfig[] MonitorConfig
         {
-            get
-            {
-                return _monitorConfig;
-            }
+            get => _monitorConfig;
             set
             {
                 _monitorConfig = value;
@@ -588,10 +495,7 @@ namespace SidebarDiagnostics.Framework
         [JsonProperty]
         public Hotkey[] Hotkeys
         {
-            get
-            {
-                return _hotkeys;
-            }
+            get => _hotkeys;
             set
             {
                 _hotkeys = value;
@@ -627,12 +531,12 @@ namespace SidebarDiagnostics.Framework
     {
         internal FontSetting() { }
 
-        private FontSetting(int fontSize)
+        private FontSetting(Int32 fontSize)
         {
             FontSize = fontSize;
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             FontSetting _that = obj as FontSetting;
 
@@ -644,71 +548,29 @@ namespace SidebarDiagnostics.Framework
             return this.FontSize == _that.FontSize;
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return base.GetHashCode();
         }
 
-        public static FontSetting x10
-        {
-            get
-            {
-                return new FontSetting(10);
-            }
-        }
+        public static FontSetting x10 => new FontSetting(10);
 
-        public static FontSetting x12
-        {
-            get
-            {
-                return new FontSetting(12);
-            }
-        }
+        public static FontSetting x12 => new FontSetting(12);
 
-        public static FontSetting x14
-        {
-            get
-            {
-                return new FontSetting(14);
-            }
-        }
+        public static FontSetting x14 => new FontSetting(14);
 
-        public static FontSetting x16
-        {
-            get
-            {
-                return new FontSetting(16);
-            }
-        }
+        public static FontSetting x16 => new FontSetting(16);
 
-        public static FontSetting x18
-        {
-            get
-            {
-                return new FontSetting(18);
-            }
-        }
+        public static FontSetting x18 => new FontSetting(18);
 
         [JsonProperty]
-        public int FontSize { get; set; }
+        public Int32 FontSize { get; set; }
 
-        public int TitleFontSize
-        {
-            get
-            {
-                return FontSize + 2;
-            }
-        }
+        public Int32 TitleFontSize => FontSize + 2;
 
-        public int SmallFontSize
-        {
-            get
-            {
-                return FontSize - 2;
-            }
-        }
+        public Int32 SmallFontSize => FontSize - 2;
 
-        public int IconSize
+        public Int32 IconSize
         {
             get
             {
@@ -733,29 +595,11 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        public int BarHeight
-        {
-            get
-            {
-                return FontSize - 3;
-            }
-        }
+        public Int32 BarHeight => FontSize - 3;
 
-        public int BarWidth
-        {
-            get
-            {
-                return BarHeight * 6;
-            }
-        }
+        public Int32 BarWidth => BarHeight * 6;
 
-        public int BarWidthWide
-        {
-            get
-            {
-                return BarHeight * 8;
-            }
-        }
+        public Int32 BarWidthWide => BarHeight * 8;
     }
 
     [JsonObject(MemberSerialization.OptIn)]
@@ -763,19 +607,19 @@ namespace SidebarDiagnostics.Framework
     {
         internal DateSetting() { }
 
-        private DateSetting(string format)
+        private DateSetting(String format)
         {
             Format = format;
         }
 
         [JsonProperty]
-        public string Format { get; set; }
+        public String Format { get; set; }
 
-        public string Display
+        public String Display
         {
             get
             {
-                if (string.Equals(Format, "Disabled", StringComparison.Ordinal))
+                if (String.Equals(Format, "Disabled", StringComparison.Ordinal))
                 {
                     return Resources.SettingsDateFormatDisabled;
                 }
@@ -784,7 +628,7 @@ namespace SidebarDiagnostics.Framework
             }
         }
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             DateSetting _that = obj as DateSetting;
 
@@ -793,10 +637,10 @@ namespace SidebarDiagnostics.Framework
                 return false;
             }
 
-            return string.Equals(this.Format, _that.Format, StringComparison.Ordinal);
+            return String.Equals(this.Format, _that.Format, StringComparison.Ordinal);
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return base.GetHashCode();
         }

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Threading;
 using System.Windows.Media;
-using SidebarDiagnostics.Style;
+using System.Windows.Threading;
 using Newtonsoft.Json;
+using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics.Windows
 {
@@ -66,90 +66,78 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        public static bool SupportDPI
-        {
-            get
-            {
-                return OS.Get >= WinOS.Win8_1;
-            }
-        }
+        public static Boolean SupportDPI => OS.Get >= WinOS.Win8_1;
 
-        public static bool SupportVirtualDesktop
-        {
-            get
-            {
-                return OS.Get >= WinOS.Win10;
-            }
-        }
+        public static Boolean SupportVirtualDesktop => OS.Get >= WinOS.Win10;
     }
 
     internal static class NativeMethods
     {
         [DllImport("user32.dll")]
-        internal static extern long GetWindowLong(IntPtr hwnd, int index);
+        internal static extern Int64 GetWindowLong(IntPtr hwnd, Int32 index);
 
         [DllImport("user32.dll")]
-        internal static extern long GetWindowLongPtr(IntPtr hwnd, int index);
+        internal static extern Int64 GetWindowLongPtr(IntPtr hwnd, Int32 index);
 
         [DllImport("user32.dll")]
-        internal static extern long SetWindowLong(IntPtr hwnd, int index, long newStyle);
+        internal static extern Int64 SetWindowLong(IntPtr hwnd, Int32 index, Int64 newStyle);
 
         [DllImport("user32.dll")]
-        internal static extern long SetWindowLongPtr(IntPtr hwnd, int index, long newStyle);
+        internal static extern Int64 SetWindowLongPtr(IntPtr hwnd, Int32 index, Int64 newStyle);
 
         [DllImport("user32.dll")]
-        internal static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwnd_after, int x, int y, int cx, int cy, uint uflags);
+        internal static extern Boolean SetWindowPos(IntPtr hwnd, IntPtr hwnd_after, Int32 x, Int32 y, Int32 cx, Int32 cy, UInt32 uflags);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        internal static extern int RegisterWindowMessage(string msg);
+        internal static extern Int32 RegisterWindowMessage(String msg);
 
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
-        internal static extern UIntPtr SHAppBarMessage(int dwMessage, ref AppBarWindow.APPBARDATA pData);
+        internal static extern UIntPtr SHAppBarMessage(Int32 dwMessage, ref AppBarWindow.APPBARDATA pData);
 
         [DllImport("user32.dll")]
-        internal static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lpRect, Monitor.EnumCallback callback, int dwData);
+        internal static extern Boolean EnumDisplayMonitors(IntPtr hdc, IntPtr lpRect, Monitor.EnumCallback callback, Int32 dwData);
 
         [DllImport("user32.dll")]
-        internal static extern bool GetMonitorInfo(IntPtr hMonitor, ref Monitor.MONITORINFO lpmi);
+        internal static extern Boolean GetMonitorInfo(IntPtr hMonitor, ref Monitor.MONITORINFO lpmi);
 
         [DllImport("shcore.dll")]
-        internal static extern IntPtr GetDpiForMonitor(IntPtr hmonitor, Monitor.MONITOR_DPI_TYPE dpiType, out uint dpiX, out uint dpiY);
+        internal static extern IntPtr GetDpiForMonitor(IntPtr hmonitor, Monitor.MONITOR_DPI_TYPE dpiType, out UInt32 dpiX, out UInt32 dpiY);
 
         [DllImport("user32.dll")]
-        internal static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+        internal static extern IntPtr MonitorFromWindow(IntPtr hwnd, UInt32 dwFlags);
 
         [DllImport("user32.dll")]
-        internal static extern bool RegisterHotKey(IntPtr hwnd, int id, uint modifiers, uint vk);
+        internal static extern Boolean RegisterHotKey(IntPtr hwnd, Int32 id, UInt32 modifiers, UInt32 vk);
 
         [DllImport("user32.dll")]
-        internal static extern bool UnregisterHotKey(IntPtr hwnd, int id);
+        internal static extern Boolean UnregisterHotKey(IntPtr hwnd, Int32 id);
 
         [DllImport("user32.dll")]
-        internal static extern IntPtr RegisterDeviceNotification(IntPtr recipient, IntPtr notificationFilter, int flags);
+        internal static extern IntPtr RegisterDeviceNotification(IntPtr recipient, IntPtr notificationFilter, Int32 flags);
 
         [DllImport("user32.dll")]
-        internal static extern bool UnregisterDeviceNotification(IntPtr handle);
+        internal static extern Boolean UnregisterDeviceNotification(IntPtr handle);
 
         [DllImport("user32.dll")]
-        internal static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, ShowDesktop.WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        internal static extern IntPtr SetWinEventHook(UInt32 eventMin, UInt32 eventMax, IntPtr hmodWinEventProc, ShowDesktop.WinEventDelegate lpfnWinEventProc, UInt32 idProcess, UInt32 idThread, UInt32 dwFlags);
 
         [DllImport("user32.dll")]
-        internal static extern bool UnhookWinEvent(IntPtr hWinEventHook);
+        internal static extern Boolean UnhookWinEvent(IntPtr hWinEventHook);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        internal static extern int GetClassName(IntPtr hwnd, StringBuilder name, int count);
+        internal static extern Int32 GetClassName(IntPtr hwnd, StringBuilder name, Int32 count);
 
         [DllImport("dwmapi.dll")]
-        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, AppBarWindow.DWMWINDOWATTRIBUTE dwmAttribute, IntPtr pvAttribute, uint cbAttribute);
+        internal static extern Int32 DwmSetWindowAttribute(IntPtr hwnd, AppBarWindow.DWMWINDOWATTRIBUTE dwmAttribute, IntPtr pvAttribute, UInt32 cbAttribute);
     }
 
     public static class ShowDesktop
     {
-        private const uint WINEVENT_OUTOFCONTEXT = 0u;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3u;
+        private const UInt32 WINEVENT_OUTOFCONTEXT = 0u;
+        private const UInt32 EVENT_SYSTEM_FOREGROUND = 3u;
 
-        private const string WORKERW = "WorkerW";
-        private const string PROGMAN = "Progman";
+        private const String WORKERW = "WorkerW";
+        private const String PROGMAN = "Progman";
 
         public static void AddHook(Sidebar sidebar)
         {
@@ -183,22 +171,22 @@ namespace SidebarDiagnostics.Windows
             _sidebarHwnd = null;
         }
 
-        private static string GetWindowClass(IntPtr hwnd)
+        private static String GetWindowClass(IntPtr hwnd)
         {
             StringBuilder _sb = new StringBuilder(32);
             NativeMethods.GetClassName(hwnd, _sb, _sb.Capacity);
             return _sb.ToString();
         }
 
-        internal delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+        internal delegate void WinEventDelegate(IntPtr hWinEventHook, UInt32 eventType, IntPtr hwnd, Int32 idObject, Int32 idChild, UInt32 dwEventThread, UInt32 dwmsEventTime);
 
-        private static void WinEventHook(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
+        private static void WinEventHook(IntPtr hWinEventHook, UInt32 eventType, IntPtr hwnd, Int32 idObject, Int32 idChild, UInt32 dwEventThread, UInt32 dwmsEventTime)
         {
             if (eventType == EVENT_SYSTEM_FOREGROUND)
             {
-                string _class = GetWindowClass(hwnd);
+                String _class = GetWindowClass(hwnd);
 
-                if (string.Equals(_class, WORKERW, StringComparison.Ordinal) /*|| string.Equals(_class, PROGMAN, StringComparison.Ordinal)*/ )
+                if (String.Equals(_class, WORKERW, StringComparison.Ordinal) /*|| string.Equals(_class, PROGMAN, StringComparison.Ordinal)*/ )
                 {
                     _sidebar.SetTopMost(false);
                 }
@@ -209,7 +197,7 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        public static bool IsHooked { get; private set; } = false;
+        public static Boolean IsHooked { get; private set; } = false;
 
         private static IntPtr? _hookIntPtr { get; set; }
 
@@ -222,46 +210,46 @@ namespace SidebarDiagnostics.Windows
 
     public static class Devices
     {
-        private const int WM_DEVICECHANGE = 0x0219;
+        private const Int32 WM_DEVICECHANGE = 0x0219;
 
         private static class DBCH_DEVICETYPE
         {
-            public const int DBT_DEVTYP_DEVICEINTERFACE = 5;
-            public const int DBT_DEVTYP_HANDLE = 6;
-            public const int DBT_DEVTYP_OEM = 0;
-            public const int DBT_DEVTYP_PORT = 3;
-            public const int DBT_DEVTYP_VOLUME = 2;
+            public const Int32 DBT_DEVTYP_DEVICEINTERFACE = 5;
+            public const Int32 DBT_DEVTYP_HANDLE = 6;
+            public const Int32 DBT_DEVTYP_OEM = 0;
+            public const Int32 DBT_DEVTYP_PORT = 3;
+            public const Int32 DBT_DEVTYP_VOLUME = 2;
         }
         
         private static class FLAGS
         {
-            public const int DEVICE_NOTIFY_WINDOW_HANDLE = 0;
-            public const int DEVICE_NOTIFY_SERVICE_HANDLE = 1;
-            public const int DEVICE_NOTIFY_ALL_INTERFACE_CLASSES = 4;
+            public const Int32 DEVICE_NOTIFY_WINDOW_HANDLE = 0;
+            public const Int32 DEVICE_NOTIFY_SERVICE_HANDLE = 1;
+            public const Int32 DEVICE_NOTIFY_ALL_INTERFACE_CLASSES = 4;
         }
 
         private static class WM_DEVICECHANGE_EVENT
         {
-            public const int DBT_CONFIGCHANGECANCELED = 0x0019;
-            public const int DBT_CONFIGCHANGED = 0x0018;
-            public const int DBT_CUSTOMEVENT = 0x8006;
-            public const int DBT_DEVICEARRIVAL = 0x8000;
-            public const int DBT_DEVICEQUERYREMOVE = 0x8001;
-            public const int DBT_DEVICEQUERYREMOVEFAILED = 0x8002;
-            public const int DBT_DEVICEREMOVECOMPLETE = 0x8004;
-            public const int DBT_DEVICEREMOVEPENDING = 0x8003;
-            public const int DBT_DEVICETYPESPECIFIC = 0x8005;
-            public const int DBT_DEVNODES_CHANGED = 0x0007;
-            public const int DBT_QUERYCHANGECONFIG = 0x0017;
-            public const int DBT_USERDEFINED = 0xFFFF;
+            public const Int32 DBT_CONFIGCHANGECANCELED = 0x0019;
+            public const Int32 DBT_CONFIGCHANGED = 0x0018;
+            public const Int32 DBT_CUSTOMEVENT = 0x8006;
+            public const Int32 DBT_DEVICEARRIVAL = 0x8000;
+            public const Int32 DBT_DEVICEQUERYREMOVE = 0x8001;
+            public const Int32 DBT_DEVICEQUERYREMOVEFAILED = 0x8002;
+            public const Int32 DBT_DEVICEREMOVECOMPLETE = 0x8004;
+            public const Int32 DBT_DEVICEREMOVEPENDING = 0x8003;
+            public const Int32 DBT_DEVICETYPESPECIFIC = 0x8005;
+            public const Int32 DBT_DEVNODES_CHANGED = 0x0007;
+            public const Int32 DBT_QUERYCHANGECONFIG = 0x0017;
+            public const Int32 DBT_USERDEFINED = 0xFFFF;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct DEV_BROADCAST_HDR
         {
-            public int dbch_size;
-            public int dbch_devicetype;
-            public int dbch_reserved;
+            public Int32 dbch_size;
+            public Int32 dbch_devicetype;
+            public Int32 dbch_reserved;
         }
 
         public static void AddHook(Sidebar window)
@@ -303,7 +291,7 @@ namespace SidebarDiagnostics.Windows
             window.HwndSource.RemoveHook(DeviceHook);
         }
 
-        private static IntPtr DeviceHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private static IntPtr DeviceHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == WM_DEVICECHANGE)
             {                
@@ -347,7 +335,7 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public static bool IsHooked { get; private set; } = false;
+        public static Boolean IsHooked { get; private set; } = false;
 
         private static CancellationTokenSource _cancelRestart { get; set; }
     }
@@ -355,15 +343,15 @@ namespace SidebarDiagnostics.Windows
     [JsonObject(MemberSerialization.OptIn)]
     public class Hotkey
     {
-        private const int WM_HOTKEY = 0x0312;
+        private const Int32 WM_HOTKEY = 0x0312;
 
         private static class MODIFIERS
         {
-            public const uint MOD_NOREPEAT = 0x4000;
-            public const uint MOD_ALT = 0x0001;
-            public const uint MOD_CONTROL = 0x0002;
-            public const uint MOD_SHIFT = 0x0004;
-            public const uint MOD_WIN = 0x0008;
+            public const UInt32 MOD_NOREPEAT = 0x4000;
+            public const UInt32 MOD_ALT = 0x0001;
+            public const UInt32 MOD_CONTROL = 0x0002;
+            public const UInt32 MOD_SHIFT = 0x0004;
+            public const UInt32 MOD_WIN = 0x0008;
         }
 
         public enum KeyAction : byte
@@ -380,7 +368,7 @@ namespace SidebarDiagnostics.Windows
 
         public Hotkey() { }
 
-        public Hotkey(int index, KeyAction action, uint virtualKey, bool altMod = false, bool ctrlMod = false, bool shiftMod = false, bool winMod = false)
+        public Hotkey(Int32 index, KeyAction action, UInt32 virtualKey, Boolean altMod = false, Boolean ctrlMod = false, Boolean shiftMod = false, Boolean winMod = false)
         {
             Index = index;
             Action = action;
@@ -395,33 +383,27 @@ namespace SidebarDiagnostics.Windows
         public KeyAction Action { get; set; }
 
         [JsonProperty]
-        public uint VirtualKey { get; set; }
+        public UInt32 VirtualKey { get; set; }
 
         [JsonProperty]
-        public bool AltMod { get; set; }
+        public Boolean AltMod { get; set; }
 
         [JsonProperty]
-        public bool CtrlMod { get; set; }
+        public Boolean CtrlMod { get; set; }
 
         [JsonProperty]
-        public bool ShiftMod { get; set; }
+        public Boolean ShiftMod { get; set; }
 
         [JsonProperty]
-        public bool WinMod { get; set; }
+        public Boolean WinMod { get; set; }
 
         public Key WinKey
         {
-            get
-            {
-                return KeyInterop.KeyFromVirtualKey((int)VirtualKey);
-            }
-            set
-            {
-                VirtualKey = (uint)KeyInterop.VirtualKeyFromKey(value);
-            }
+            get => KeyInterop.KeyFromVirtualKey((Int32)VirtualKey);
+            set => VirtualKey = (UInt32)KeyInterop.VirtualKeyFromKey(value);
         }
 
-        private int Index { get; set; }
+        private Int32 Index { get; set; }
 
         public static void Initialize(Sidebar window, Hotkey[] settings)
         {
@@ -493,7 +475,7 @@ namespace SidebarDiagnostics.Windows
 
         private static void Register(Hotkey hotkey)
         {
-            uint _mods = MODIFIERS.MOD_NOREPEAT;
+            UInt32 _mods = MODIFIERS.MOD_NOREPEAT;
 
             if (hotkey.AltMod)
             {
@@ -533,11 +515,11 @@ namespace SidebarDiagnostics.Windows
 
         public static Hotkey[] RegisteredKeys { get; private set; }
         
-        private static IntPtr KeyHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private static IntPtr KeyHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == WM_HOTKEY)
             {
-                int _id = wParam.ToInt32();
+                Int32 _id = wParam.ToInt32();
 
                 Hotkey _hotkey = RegisteredKeys.FirstOrDefault(k => k.Index == _id);
 
@@ -628,65 +610,41 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public static bool IsHooked { get; private set; } = false;
+        public static Boolean IsHooked { get; private set; } = false;
 
         private static Sidebar _sidebar { get; set; }
 
-        private static int _index { get; set; }
+        private static Int32 _index { get; set; }
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT
     {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
+        public Int32 Left;
+        public Int32 Top;
+        public Int32 Right;
+        public Int32 Bottom;
 
-        public int Width
-        {
-            get
-            {
-                return Right - Left;
-            }
-        }
+        public Int32 Width => Right - Left;
 
-        public int Height
-        {
-            get
-            {
-                return Bottom - Top;
-            }
-        }
+        public Int32 Height => Bottom - Top;
     }
     
     public class WorkArea
     {
-        public double Left { get; set; }
+        public Double Left { get; set; }
 
-        public double Top { get; set; }
+        public Double Top { get; set; }
 
-        public double Right { get; set; }
+        public Double Right { get; set; }
 
-        public double Bottom { get; set; }
+        public Double Bottom { get; set; }
 
-        public double Width
-        {
-            get
-            {
-                return Right - Left;
-            }
-        }
+        public Double Width => Right - Left;
 
-        public double Height
-        {
-            get
-            {
-                return Bottom - Top;
-            }
-        }
+        public Double Height => Bottom - Top;
 
-        public void Scale(double x, double y)
+        public void Scale(Double x, Double y)
         {
             Left *= x;
             Top *= y;
@@ -694,7 +652,7 @@ namespace SidebarDiagnostics.Windows
             Bottom *= y;
         }
 
-        public void Offset(double x, double y)
+        public void Offset(Double x, Double y)
         {
             Left += x;
             Top += y;
@@ -702,7 +660,7 @@ namespace SidebarDiagnostics.Windows
             Bottom += y;
         }
 
-        public void SetWidth(DockEdge edge, double width)
+        public void SetWidth(DockEdge edge, Double width)
         {
             switch (edge)
             {
@@ -730,15 +688,15 @@ namespace SidebarDiagnostics.Windows
 
     public class Monitor
     {
-        private const uint DPICONST = 96u;
+        private const UInt32 DPICONST = 96u;
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct MONITORINFO
         {
-            public int cbSize;
+            public Int32 cbSize;
             public RECT Size;
             public RECT WorkArea;
-            public bool IsPrimary;
+            public Boolean IsPrimary;
         }
 
         internal enum MONITOR_DPI_TYPE : int
@@ -753,45 +711,21 @@ namespace SidebarDiagnostics.Windows
 
         public RECT WorkArea { get; set; }
 
-        public double DPIx { get; set; }
+        public Double DPIx { get; set; }
 
-        public double ScaleX
-        {
-            get
-            {
-                return DPIx / DPICONST;
-            }
-        }
+        public Double ScaleX => DPIx / DPICONST;
 
-        public double InverseScaleX
-        {
-            get
-            {
-                return 1 / ScaleX;
-            }
-        }
+        public Double InverseScaleX => 1 / ScaleX;
 
-        public double DPIy { get; set; }
+        public Double DPIy { get; set; }
 
-        public double ScaleY
-        {
-            get
-            {
-                return DPIy / DPICONST;
-            }
-        }
+        public Double ScaleY => DPIy / DPICONST;
 
-        public double InverseScaleY
-        {
-            get
-            {
-                return 1 / ScaleY;
-            }
-        }
+        public Double InverseScaleY => 1 / ScaleY;
 
-        public bool IsPrimary { get; set; }
+        public Boolean IsPrimary { get; set; }
 
-        internal delegate bool EnumCallback(IntPtr hDesktop, IntPtr hdc, ref RECT pRect, int dwData);
+        internal delegate Boolean EnumCallback(IntPtr hDesktop, IntPtr hdc, ref RECT pRect, Int32 dwData);
 
         public static Monitor GetMonitor(IntPtr hMonitor)
         {
@@ -800,8 +734,8 @@ namespace SidebarDiagnostics.Windows
 
             NativeMethods.GetMonitorInfo(hMonitor, ref _info);
 
-            uint _dpiX = Monitor.DPICONST;
-            uint _dpiY = Monitor.DPICONST;
+            UInt32 _dpiX = Monitor.DPICONST;
+            UInt32 _dpiY = Monitor.DPICONST;
 
             if (OS.SupportDPI)
             {
@@ -822,7 +756,7 @@ namespace SidebarDiagnostics.Windows
         {
             List<Monitor> _monitors = new List<Monitor>();
 
-            EnumCallback _callback = (IntPtr hMonitor, IntPtr hdc, ref RECT pRect, int dwData) =>
+            EnumCallback _callback = (IntPtr hMonitor, IntPtr hdc, ref RECT pRect, Int32 dwData) =>
             {
                 _monitors.Add(GetMonitor(hMonitor));
 
@@ -834,12 +768,12 @@ namespace SidebarDiagnostics.Windows
             return _monitors.OrderByDescending(m => m.IsPrimary).ToArray();
         }
 
-        public static Monitor GetMonitorFromIndex(int index)
+        public static Monitor GetMonitorFromIndex(Int32 index)
         {
             return GetMonitorFromIndex(index, GetMonitors());
         }
 
-        private static Monitor GetMonitorFromIndex(int index, Monitor[] monitors)
+        private static Monitor GetMonitorFromIndex(Int32 index, Monitor[] monitors)
         {
             if (index < monitors.Length)
                 return monitors[index];
@@ -847,12 +781,12 @@ namespace SidebarDiagnostics.Windows
                 return monitors.GetPrimary();
         }
         
-        public static void GetWorkArea(AppBarWindow window, out int screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
+        public static void GetWorkArea(AppBarWindow window, out Int32 screen, out DockEdge edge, out WorkArea windowWA, out WorkArea appbarWA)
         {
             screen = Framework.Settings.Instance.ScreenIndex;
             edge = Framework.Settings.Instance.DockEdge;
 
-            double _uiScale = Framework.Settings.Instance.UIScale;
+            Double _uiScale = Framework.Settings.Instance.UIScale;
 
             if (OS.SupportDPI)
             {
@@ -867,8 +801,8 @@ namespace SidebarDiagnostics.Windows
             windowWA = Windows.WorkArea.FromRECT(_active.WorkArea);
             windowWA.Scale(_primary.InverseScaleX, _primary.InverseScaleY);
 
-            double _modifyX = 0d;
-            double _modifyY = 0d;
+            Double _modifyX = 0d;
+            Double _modifyY = 0d;
 
             if (
                 window.IsAppBar &&
@@ -887,12 +821,12 @@ namespace SidebarDiagnostics.Windows
 
             windowWA.Offset(_modifyX, _modifyY);
 
-            double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
+            Double _windowWidth = Framework.Settings.Instance.SidebarWidth * _uiScale;
 
             windowWA.SetWidth(edge, _windowWidth);
             
-            int _offsetX = Framework.Settings.Instance.XOffset;
-            int _offsetY = Framework.Settings.Instance.YOffset;
+            Int32 _offsetX = Framework.Settings.Instance.XOffset;
+            Int32 _offsetY = Framework.Settings.Instance.YOffset;
 
             windowWA.Offset(_offsetX, _offsetY);
 
@@ -900,7 +834,7 @@ namespace SidebarDiagnostics.Windows
 
             appbarWA.Offset(_modifyX, _modifyY);
 
-            double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primary.ScaleX : 0;
+            Double _appbarWidth = Framework.Settings.Instance.UseAppBar ? windowWA.Width * _primary.ScaleX : 0;
 
             appbarWA.SetWidth(edge, _appbarWidth);
 
@@ -920,11 +854,11 @@ namespace SidebarDiagnostics.Windows
     {
         private static class WM_MESSAGES
         {
-            public const int WM_DPICHANGED = 0x02E0;
-            public const int WM_GETMINMAXINFO = 0x0024;
-            public const int WM_SIZE = 0x0005;
-            public const int WM_WINDOWPOSCHANGING = 0x0046;
-            public const int WM_WINDOWPOSCHANGED = 0x0047;
+            public const Int32 WM_DPICHANGED = 0x02E0;
+            public const Int32 WM_GETMINMAXINFO = 0x0024;
+            public const Int32 WM_SIZE = 0x0005;
+            public const Int32 WM_WINDOWPOSCHANGING = 0x0046;
+            public const Int32 WM_WINDOWPOSCHANGED = 0x0047;
         }
 
         public override void BeginInit()
@@ -955,12 +889,12 @@ namespace SidebarDiagnostics.Windows
 
             //Monitor _monitorInfo = Monitor.GetMonitor(_hmonitor);
 
-            double _uiScale = Framework.Settings.Instance.UIScale;
+            Double _uiScale = Framework.Settings.Instance.UIScale;
 
             UpdateScale(_uiScale, _uiScale, true);
         }
 
-        public void UpdateScale(double scaleX, double scaleY, bool resize)
+        public void UpdateScale(Double scaleX, Double scaleY, Boolean resize)
         {
             if (VisualChildrenCount > 0)
             {
@@ -979,7 +913,7 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        private void DPIAwareWindow_Loaded(object sender, RoutedEventArgs e)
+        private void DPIAwareWindow_Loaded(Object sender, RoutedEventArgs e)
         {
             HandleDPI();
 
@@ -988,7 +922,7 @@ namespace SidebarDiagnostics.Windows
             //HwndSource.AddHook(WindowHook);
         }
 
-        private void UIScale_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void UIScale_PropertyChanged(Object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "UIScale")
             {
@@ -1008,55 +942,31 @@ namespace SidebarDiagnostics.Windows
         //    return IntPtr.Zero;
         //}
 
-        public HwndSource HwndSource
+        public HwndSource HwndSource => (HwndSource)PresentationSource.FromVisual(this);
+
+        public static readonly DependencyProperty AutoDPIProperty = DependencyProperty.Register("AutoDPI", typeof(Boolean), typeof(DPIAwareWindow), new UIPropertyMetadata(true));
+
+        public Boolean AutoDPI
         {
-            get
-            {
-                return (HwndSource)PresentationSource.FromVisual(this);
-            }
+            get => (Boolean)GetValue(AutoDPIProperty);
+            set => SetValue(AutoDPIProperty, value);
         }
 
-        public static readonly DependencyProperty AutoDPIProperty = DependencyProperty.Register("AutoDPI", typeof(bool), typeof(DPIAwareWindow), new UIPropertyMetadata(true));
-
-        public bool AutoDPI
+        public new Double Width
         {
-            get
-            {
-                return (bool)GetValue(AutoDPIProperty);
-            }
-            set
-            {
-                SetValue(AutoDPIProperty, value);
-            }
+            get => base.Width;
+            set => _originalWidth = base.Width = value;
         }
 
-        public new double Width
+        public new Double Height
         {
-            get
-            {
-                return base.Width;
-            }
-            set
-            {
-                _originalWidth = base.Width = value;
-            }
+            get => base.Height;
+            set => _originalHeight = base.Height = value;
         }
 
-        public new double Height
-        {
-            get
-            {
-                return base.Height;
-            }
-            set
-            {
-                _originalHeight = base.Height = value;
-            }
-        }
+        private Double _originalWidth { get; set; }
 
-        private double _originalWidth { get; set; }
-
-        private double _originalHeight { get; set; }
+        private Double _originalHeight { get; set; }
     }
 
     [Serializable]
@@ -1074,35 +984,35 @@ namespace SidebarDiagnostics.Windows
         [StructLayout(LayoutKind.Sequential)]
         internal struct APPBARDATA
         {
-            public int cbSize;
+            public Int32 cbSize;
             public IntPtr hWnd;
-            public int uCallbackMessage;
-            public int uEdge;
+            public Int32 uCallbackMessage;
+            public Int32 uEdge;
             public RECT rc;
             public IntPtr lParam;
         }
 
         private static class APPBARMSG
         {
-            public const int ABM_NEW = 0;
-            public const int ABM_REMOVE = 1;
-            public const int ABM_QUERYPOS = 2;
-            public const int ABM_SETPOS = 3;
-            public const int ABM_GETSTATE = 4;
-            public const int ABM_GETTASKBARPOS = 5;
-            public const int ABM_ACTIVATE = 6;
-            public const int ABM_GETAUTOHIDEBAR = 7;
-            public const int ABM_SETAUTOHIDEBAR = 8;
-            public const int ABM_WINDOWPOSCHANGED = 9;
-            public const int ABM_SETSTATE = 10;
+            public const Int32 ABM_NEW = 0;
+            public const Int32 ABM_REMOVE = 1;
+            public const Int32 ABM_QUERYPOS = 2;
+            public const Int32 ABM_SETPOS = 3;
+            public const Int32 ABM_GETSTATE = 4;
+            public const Int32 ABM_GETTASKBARPOS = 5;
+            public const Int32 ABM_ACTIVATE = 6;
+            public const Int32 ABM_GETAUTOHIDEBAR = 7;
+            public const Int32 ABM_SETAUTOHIDEBAR = 8;
+            public const Int32 ABM_WINDOWPOSCHANGED = 9;
+            public const Int32 ABM_SETSTATE = 10;
         }
 
         private static class APPBARNOTIFY
         {
-            public const int ABN_STATECHANGE = 0;
-            public const int ABN_POSCHANGED = 1;
-            public const int ABN_FULLSCREENAPP = 2;
-            public const int ABN_WINDOWARRANGE = 3;
+            public const Int32 ABN_STATECHANGE = 0;
+            public const Int32 ABN_POSCHANGED = 1;
+            public const Int32 ABN_FULLSCREENAPP = 2;
+            public const Int32 ABN_WINDOWARRANGE = 3;
         }
 
         internal enum DWMWINDOWATTRIBUTE : int
@@ -1131,23 +1041,23 @@ namespace SidebarDiagnostics.Windows
             public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
             public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
 
-            public const uint SWP_NOSIZE = 0x0001;
-            public const uint SWP_NOMOVE = 0x0002;
-            public const uint SWP_NOACTIVATE = 0x0010;
+            public const UInt32 SWP_NOSIZE = 0x0001;
+            public const UInt32 SWP_NOMOVE = 0x0002;
+            public const UInt32 SWP_NOACTIVATE = 0x0010;
         }
 
         private static class WND_STYLE
         {
-            public const int GWL_EXSTYLE = -20;
+            public const Int32 GWL_EXSTYLE = -20;
 
-            public const long WS_EX_TRANSPARENT = 32;
-            public const long WS_EX_TOOLWINDOW = 128;
+            public const Int64 WS_EX_TRANSPARENT = 32;
+            public const Int64 WS_EX_TOOLWINDOW = 128;
         }
 
         private static class WM_WINDOWPOSCHANGING
         {
-            public const int MSG = 0x0046;
-            public const int SWP_NOMOVE = 0x0002;
+            public const Int32 MSG = 0x0046;
+            public const Int32 SWP_NOMOVE = 0x0002;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -1155,11 +1065,11 @@ namespace SidebarDiagnostics.Windows
         {
             public IntPtr hWnd;
             public IntPtr hWndInsertAfter;
-            public int x;
-            public int y;
-            public int cx;
-            public int cy;
-            public uint flags;
+            public Int32 x;
+            public Int32 y;
+            public Int32 cx;
+            public Int32 cy;
+            public UInt32 flags;
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -1169,7 +1079,7 @@ namespace SidebarDiagnostics.Windows
             Loaded += AppBarWindow_Loaded;
         }
 
-        private void AppBarWindow_Loaded(object sender, RoutedEventArgs e)
+        private void AppBarWindow_Loaded(Object sender, RoutedEventArgs e)
         {
             PreventMove();
         }
@@ -1210,7 +1120,7 @@ namespace SidebarDiagnostics.Windows
             HwndSource.RemoveHook(MoveHook);
         }
 
-        private IntPtr MoveHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr MoveHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == WM_WINDOWPOSCHANGING.MSG)
             {
@@ -1226,7 +1136,7 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public void SetTopMost(bool activate)
+        public void SetTopMost(Boolean activate)
         {
             if (IsTopMost)
             {
@@ -1238,7 +1148,7 @@ namespace SidebarDiagnostics.Windows
             SetPos(HWND_FLAG.HWND_TOPMOST, activate);
         }
 
-        public void ClearTopMost(bool activate)
+        public void ClearTopMost(Boolean activate)
         {
             if (!IsTopMost)
             {
@@ -1250,16 +1160,16 @@ namespace SidebarDiagnostics.Windows
             SetPos(HWND_FLAG.HWND_NOTOPMOST, activate);
         }
 
-        public void SetBottom(bool activate)
+        public void SetBottom(Boolean activate)
         {
             IsTopMost = false;
 
             SetPos(HWND_FLAG.HWND_BOTTOM, activate);
         }
 
-        private void SetPos(IntPtr hwnd_after, bool activate)
+        private void SetPos(IntPtr hwnd_after, Boolean activate)
         {
-            uint _uflags = HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE;
+            UInt32 _uflags = HWND_FLAG.SWP_NOMOVE | HWND_FLAG.SWP_NOSIZE;
 
             if (!activate)
             {
@@ -1329,19 +1239,19 @@ namespace SidebarDiagnostics.Windows
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
-            IntPtr _status = Marshal.AllocHGlobal(sizeof(int));
+            IntPtr _status = Marshal.AllocHGlobal(sizeof(Int32));
             Marshal.WriteInt32(_status, 1);
 
-            NativeMethods.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_EXCLUDED_FROM_PEEK, _status, sizeof(int));
+            NativeMethods.DwmSetWindowAttribute(_hwnd, DWMWINDOWATTRIBUTE.DWMWA_EXCLUDED_FROM_PEEK, _status, sizeof(Int32));
         }
 
-        private void SetWindowLong(long? add, long? remove)
+        private void SetWindowLong(Int64? add, Int64? remove)
         {
             IntPtr _hwnd = new WindowInteropHelper(this).Handle;
 
-            bool _32bit = IntPtr.Size == 4;
+            Boolean _32bit = IntPtr.Size == 4;
 
-            long _style;
+            Int64 _style;
 
             if (_32bit)
             {
@@ -1372,14 +1282,14 @@ namespace SidebarDiagnostics.Windows
             }
         }
 
-        public void SetAppBar(int screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
+        public void SetAppBar(Int32 screen, DockEdge edge, WorkArea windowWA, WorkArea appbarWA, Action callback)
         {
             if (edge == DockEdge.None)
             {
                 throw new ArgumentException("This parameter cannot be set to 'none'.", "edge");
             }
 
-            bool _init = false;
+            Boolean _init = false;
 
             APPBARDATA _data = NewData();
 
@@ -1395,13 +1305,13 @@ namespace SidebarDiagnostics.Windows
             Screen = screen;
             DockEdge = edge;
             
-            _data.uEdge = (int)edge;
+            _data.uEdge = (Int32)edge;
             _data.rc = new RECT()
             {
-                Left = (int)Math.Round(appbarWA.Left),
-                Top = (int)Math.Round(appbarWA.Top),
-                Right = (int)Math.Round(appbarWA.Right),
-                Bottom = (int)Math.Round(appbarWA.Bottom)
+                Left = (Int32)Math.Round(appbarWA.Left),
+                Top = (Int32)Math.Round(appbarWA.Top),
+                Right = (Int32)Math.Round(appbarWA.Right),
+                Bottom = (Int32)Math.Round(appbarWA.Bottom)
             };
 
             NativeMethods.SHAppBarMessage(APPBARMSG.ABM_QUERYPOS, ref _data);
@@ -1458,7 +1368,7 @@ namespace SidebarDiagnostics.Windows
         {
             if (Framework.Settings.Instance.UseAppBar)
             {
-                int _screen;
+                Int32 _screen;
                 DockEdge _edge;
                 WorkArea _windowWA;
                 WorkArea _appbarWA;
@@ -1490,7 +1400,7 @@ namespace SidebarDiagnostics.Windows
             return _data;
         }
 
-        private IntPtr AppBarHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr AppBarHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == _callbackID)
             {
@@ -1513,7 +1423,7 @@ namespace SidebarDiagnostics.Windows
 
                             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
                             {
-                                int _screen;
+                                Int32 _screen;
                                 DockEdge _edge;
                                 WorkArea _windowWA;
                                 WorkArea _appbarWA;
@@ -1550,25 +1460,25 @@ namespace SidebarDiagnostics.Windows
             return IntPtr.Zero;
         }
 
-        public bool IsTopMost { get; private set; } = false;
+        public Boolean IsTopMost { get; private set; } = false;
 
-        public bool IsClickThrough { get; private set; } = false;
+        public Boolean IsClickThrough { get; private set; } = false;
 
-        public bool IsInAltTab { get; private set; } = true;
+        public Boolean IsInAltTab { get; private set; } = true;
 
-        public bool IsAppBar { get; private set; } = false;
+        public Boolean IsAppBar { get; private set; } = false;
 
-        public int Screen { get; private set; } = 0;
+        public Int32 Screen { get; private set; } = 0;
 
         public DockEdge DockEdge { get; private set; } = DockEdge.None;
 
-        public double AppBarWidth { get; private set; } = 0;
+        public Double AppBarWidth { get; private set; } = 0;
 
-        private bool _canMove { get; set; } = true;
+        private Boolean _canMove { get; set; } = true;
 
-        private bool _wasTopMost { get; set; } = false;
+        private Boolean _wasTopMost { get; set; } = false;
 
-        private int _callbackID { get; set; }
+        private Int32 _callbackID { get; set; }
 
         private CancellationTokenSource _cancelReposition { get; set; }
     }

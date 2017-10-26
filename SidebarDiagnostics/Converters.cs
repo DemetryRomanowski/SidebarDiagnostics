@@ -9,25 +9,25 @@ namespace SidebarDiagnostics.Converters
 {
     public class IntToStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            string _format = (string)parameter;
+            String _format = (String)parameter;
 
-            if (string.IsNullOrEmpty(_format))
+            if (String.IsNullOrEmpty(_format))
             {
                 return value.ToString();
             }
             else
             {
-                return string.Format(culture, _format, value);
+                return String.Format(culture, _format, value);
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            int _return = 0;
+            Int32 _return = 0;
 
-            int.TryParse(value.ToString(), out _return);
+            Int32.TryParse(value.ToString(), out _return);
 
             return _return;
         }
@@ -35,7 +35,7 @@ namespace SidebarDiagnostics.Converters
 
     public class HotkeyToStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             Hotkey _hotkey = (Hotkey)value;
 
@@ -52,7 +52,7 @@ namespace SidebarDiagnostics.Converters
                 new KeyConverter().ConvertToString(_hotkey.WinKey);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             return null;
         }
@@ -60,14 +60,14 @@ namespace SidebarDiagnostics.Converters
 
     public class PercentConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            double _value = (double)value;
+            Double _value = (Double)value;
 
-            return string.Format("{0:0}%", _value);
+            return String.Format("{0:0}%", _value);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             return null;
         }
@@ -75,27 +75,27 @@ namespace SidebarDiagnostics.Converters
 
     public class BoolInverseConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(Boolean)value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(Boolean)value;
         }
     }
 
     public class MetricLabelConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            string _value = (string)value;
+            String _value = (String)value;
 
-            return string.Format("{0}:", _value);
+            return String.Format("{0}:", _value);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             return null;
         }
@@ -103,14 +103,14 @@ namespace SidebarDiagnostics.Converters
 
     public class FontToSpaceConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
-            int _value = (int)value;
+            Int32 _value = (Int32)value;
 
             return new Thickness(0, 0, _value * 0.4d, 0);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             return null;
         }

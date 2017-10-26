@@ -1,4 +1,4 @@
-﻿<win:AppBarWindow
+﻿<windows:AppBarWindow
         x:Class="SidebarDiagnostics.Sidebar"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:SidebarDiagnostics"
         xmlns:frame="clr-namespace:SidebarDiagnostics.Framework"
         xmlns:monitor="clr-namespace:SidebarDiagnostics.Monitoring"
-        xmlns:win="clr-namespace:SidebarDiagnostics.Windows"
+        xmlns:windows="clr-namespace:SidebarDiagnostics.Windows"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         StateChanged="Window_StateChanged"
@@ -106,6 +106,41 @@
                         </ContentControl.Style>
                     </ContentControl>
 
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=ShowLaunch, Mode=OneWay}" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <StackPanel Style="{StaticResource GroupPanel}">
+                                                    <StackPanel Style="{StaticResource MonitorPanel}">
+                                                        <Label Content="{Binding Path=LaunchName, Mode=OneWay}" Style="{StaticResource AppTitle}" />
+                                                        <ContentControl>
+                                                            <ContentControl.Style>
+                                                                <Style TargetType="{x:Type ContentControl}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Path=ShowLaunchDate, Mode=OneWay}" Value="True">
+                                                                            <Setter Property="Content">
+                                                                                <Setter.Value>
+                                                                                    <TextBlock Text="{Binding Path=LaunchDate, Mode=OneWay}" Margin="0,4,0,0" Style="{StaticResource AppText}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ContentControl.Style>
+                                                        </ContentControl>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+
                     <ItemsControl DataContext="{Binding Path=MonitorManager, Mode=OneWay}" ItemsSource="{Binding Path=MonitorPanels, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type monitor:MonitorPanel}">
@@ -153,6 +188,7 @@
                                                 </StackPanel>
                                             </DataTemplate>
 
+                                            
                                             <DataTemplate DataType="{x:Type monitor:DriveMonitor}">
                                                 <StackPanel Style="{StaticResource MonitorPanel}">
                                                     <ContentControl>
@@ -227,4 +263,4 @@
             </ScrollViewer>
         </DockPanel>
     </Grid>
-</win:AppBarWindow>
+</windows:AppBarWindow>

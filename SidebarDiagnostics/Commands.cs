@@ -7,7 +7,7 @@ namespace SidebarDiagnostics.Commands
 {
     public class ActivateCommand : ICommand
     {
-        public void Execute(object parameter)
+        public void Execute(Object parameter)
         {
             Sidebar _sidebar = App.Current.Sidebar;
 
@@ -19,7 +19,7 @@ namespace SidebarDiagnostics.Commands
             _sidebar.Activate();
         }
 
-        public bool CanExecute(object parameter)
+        public Boolean CanExecute(Object parameter)
         {
             return true;
         }

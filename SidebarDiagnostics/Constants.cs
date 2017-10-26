@@ -1,16 +1,18 @@
 ﻿
+using System;
+
 namespace SidebarDiagnostics
 {
     public static class Constants
     {
         public static class Generic
         {
-            public const string TASKNAME = "SidebarStartup";
+            public const String TASKNAME = "SidebarStartup";
         }
 
         public static class URLs
         {
-            public const string IPIFY = "https://api.ipify.org";
+            public const String IPIFY = "https://api.ipify.org";
         }
     }
 }

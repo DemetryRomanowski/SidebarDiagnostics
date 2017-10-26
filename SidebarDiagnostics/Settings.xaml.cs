@@ -8,8 +8,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics
 {
@@ -28,7 +28,7 @@ namespace SidebarDiagnostics
             ShowDialog();
         }
 
-        private async Task Save(bool finalize)
+        private async Task Save(Boolean finalize)
         {
             Model.Save();
 
@@ -45,7 +45,7 @@ namespace SidebarDiagnostics
             }));
         }
         
-        private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void NumberBox_PreviewTextInput(Object sender, TextCompositionEventArgs e)
         {
             if (new Regex("[^0-9.-]+").IsMatch(e.Text))
             {
@@ -53,7 +53,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void OffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OffsetSlider_ValueChanged(Object sender, RoutedPropertyChangedEventArgs<Double> e)
         {
             if (e.NewValue != 0d)
             {
@@ -61,12 +61,12 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void ClickThroughCheckbox_Checked(object sender, RoutedEventArgs e)
+        private void ClickThroughCheckbox_Checked(Object sender, RoutedEventArgs e)
         {
             ShowTrayIconCheckbox.IsChecked = true;
         }
 
-        private void ShowTrayIconCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        private void ShowTrayIconCheckbox_Unchecked(Object sender, RoutedEventArgs e)
         {
             XOffsetSlider.Value = 0d;
             YOffsetSlider.Value = 0d;
@@ -74,7 +74,7 @@ namespace SidebarDiagnostics
             ClickThroughCheckbox.IsChecked = false;
         }
         
-        private void BindButton_LostFocus(object sender, RoutedEventArgs e)
+        private void BindButton_LostFocus(Object sender, RoutedEventArgs e)
         {
             if (_hotkey != null)
             {
@@ -84,7 +84,7 @@ namespace SidebarDiagnostics
             (sender as ToggleButton).IsChecked = false;
         }
 
-        private void BindToggle_Click(object sender, RoutedEventArgs e)
+        private void BindToggle_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -98,7 +98,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindShow_Click(object sender, RoutedEventArgs e)
+        private void BindShow_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -112,7 +112,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindHide_Click(object sender, RoutedEventArgs e)
+        private void BindHide_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -126,7 +126,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindReload_Click(object sender, RoutedEventArgs e)
+        private void BindReload_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -140,7 +140,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindClose_Click(object sender, RoutedEventArgs e)
+        private void BindClose_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -154,7 +154,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindCycleEdge_Click(object sender, RoutedEventArgs e)
+        private void BindCycleEdge_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -168,7 +168,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindCycleScreen_Click(object sender, RoutedEventArgs e)
+        private void BindCycleScreen_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -182,7 +182,7 @@ namespace SidebarDiagnostics
             }
         }
 
-        private void BindReserveSpace_Click(object sender, RoutedEventArgs e)
+        private void BindReserveSpace_Click(Object sender, RoutedEventArgs e)
         {
             _keybinder = (ToggleButton)sender;
 
@@ -254,7 +254,7 @@ namespace SidebarDiagnostics
             _keybinder.IsChecked = false;
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(Object sender, KeyEventArgs e)
         {
             Key _key = e.Key == Key.System ? e.SystemKey : e.Key;
 
@@ -290,19 +290,19 @@ namespace SidebarDiagnostics
             e.Handled = true;
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(Object sender, RoutedEventArgs e)
         {
             await Save(true);
 
             Close();
         }
 
-        private async void ApplyButton_Click(object sender, RoutedEventArgs e)
+        private async void ApplyButton_Click(Object sender, RoutedEventArgs e)
         {
             await Save(false);
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(Object sender, RoutedEventArgs e)
         {
             if (Model.IsChanged)
             {
@@ -318,18 +318,18 @@ namespace SidebarDiagnostics
             Close();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
             Hotkey.Disable();
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(Object sender, CancelEventArgs e)
         {
             DataContext = null;
             Model = null;
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closed(Object sender, EventArgs e)
         {
             Hotkey.Enable();
         }

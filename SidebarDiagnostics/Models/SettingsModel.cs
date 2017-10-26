@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
-using SidebarDiagnostics.Utilities;
-using SidebarDiagnostics.Monitoring;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Framework;
+using SidebarDiagnostics.Monitoring;
+using SidebarDiagnostics.Utilities;
+using SidebarDiagnostics.Windows;
 
 namespace SidebarDiagnostics.Models
 {
@@ -26,7 +26,7 @@ namespace SidebarDiagnostics.Models
 
             Monitor[] _monitors = Monitor.GetMonitors();
 
-            ScreenItems = _monitors.Select((s, i) => new ScreenItem() { Index = i, Text = string.Format("#{0}", i + 1) }).ToArray();
+            ScreenItems = _monitors.Select((s, i) => new ScreenItem() { Index = i, Text = String.Format("#{0}", i + 1) }).ToArray();
 
             if (Framework.Settings.Instance.ScreenIndex < _monitors.Length)
             {
@@ -101,7 +101,7 @@ namespace SidebarDiagnostics.Models
                     _record.HardwareOC = new ObservableCollection<HardwareConfig>(
                         from hw in sidebar.Model.MonitorManager.GetHardware(_record.Type)
                         join config in _record.Hardware on hw.ID equals config.ID into merged
-                        from newhw in merged.DefaultIfEmpty(hw).Select(newhw => { newhw.ActualName = hw.ActualName; if (string.IsNullOrEmpty(newhw.Name)) { newhw.Name = hw.ActualName; } return newhw; })
+                        from newhw in merged.DefaultIfEmpty(hw).Select(newhw => { newhw.ActualName = hw.ActualName; if (String.IsNullOrEmpty(newhw.Name)) { newhw.Name = hw.ActualName; } return newhw; })
                         orderby newhw.Order descending, newhw.Name ascending
                         select newhw
                         );
@@ -127,7 +127,7 @@ namespace SidebarDiagnostics.Models
 
         public void Save()
         {
-            if (!string.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
+            if (!String.Equals(Culture, Framework.Settings.Instance.Culture, StringComparison.Ordinal))
             {
                 MessageBox.Show(Resources.LanguageChangedText, Resources.LanguageChangedTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
@@ -163,15 +163,15 @@ namespace SidebarDiagnostics.Models
 
             MonitorConfig[] _config = MonitorConfig.Select(c => c.Clone()).ToArray();
 
-            for (int i = 0; i < _config.Length; i++)
+            for (Int32 i = 0; i < _config.Length; i++)
             {
                 HardwareConfig[] _hardware = _config[i].HardwareOC.ToArray();
 
-                for (int v = 0; v < _hardware.Length; v++)
+                for (Int32 v = 0; v < _hardware.Length; v++)
                 {
                     _hardware[v].Order = Convert.ToByte(_hardware.Length - v);
 
-                    if (string.IsNullOrEmpty(_hardware[v].Name) || string.Equals(_hardware[v].Name, _hardware[v].ActualName, StringComparison.Ordinal))
+                    if (String.IsNullOrEmpty(_hardware[v].Name) || String.Equals(_hardware[v].Name, _hardware[v].ActualName, StringComparison.Ordinal))
                     {
                         _hardware[v].Name = null;
                     }
@@ -245,7 +245,7 @@ namespace SidebarDiagnostics.Models
             IsChanged = false;
         }
 
-        public void NotifyPropertyChanged(string propertyName)
+        public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -260,24 +260,21 @@ namespace SidebarDiagnostics.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Child_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Child_PropertyChanged(Object sender, PropertyChangedEventArgs e)
         {
             IsChanged = true;
         }
 
-        private void Child_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Child_CollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
         {
             IsChanged = true;
         }
 
-        private bool _isChanged { get; set; } = false;
+        private Boolean _isChanged { get; set; } = false;
 
-        public bool IsChanged
+        public Boolean IsChanged
         {
-            get
-            {
-                return _isChanged;
-            }
+            get => _isChanged;
             set
             {
                 _isChanged = value;
@@ -290,10 +287,7 @@ namespace SidebarDiagnostics.Models
 
         public DockEdge DockEdge
         {
-            get
-            {
-                return _dockEdge;
-            }
+            get => _dockEdge;
             set
             {
                 _dockEdge = value;
@@ -306,10 +300,7 @@ namespace SidebarDiagnostics.Models
 
         public DockItem[] DockEdgeItems
         {
-            get
-            {
-                return _dockEdgeItems;
-            }
+            get => _dockEdgeItems;
             set
             {
                 _dockEdgeItems = value;
@@ -318,14 +309,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private int _screenIndex { get; set; }
+        private Int32 _screenIndex { get; set; }
 
-        public int ScreenIndex
+        public Int32 ScreenIndex
         {
-            get
-            {
-                return _screenIndex;
-            }
+            get => _screenIndex;
             set
             {
                 _screenIndex = value;
@@ -338,10 +326,7 @@ namespace SidebarDiagnostics.Models
 
         public ScreenItem[] ScreenItems
         {
-            get
-            {
-                return _screenItems;
-            }
+            get => _screenItems;
             set
             {
                 _screenItems = value;
@@ -350,14 +335,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _culture { get; set; }
+        private String _culture { get; set; }
 
-        public string Culture
+        public String Culture
         {
-            get
-            {
-                return _culture;
-            }
+            get => _culture;
             set
             {
                 _culture = value;
@@ -370,10 +352,7 @@ namespace SidebarDiagnostics.Models
 
         public CultureItem[] CultureItems
         {
-            get
-            {
-                return _cultureItems;
-            }
+            get => _cultureItems;
             set
             {
                 _cultureItems = value;
@@ -382,14 +361,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private double _uiScale { get; set; }
+        private Double _uiScale { get; set; }
 
-        public double UIScale
+        public Double UIScale
         {
-            get
-            {
-                return _uiScale;
-            }
+            get => _uiScale;
             set
             {
                 _uiScale = value;
@@ -398,14 +374,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private int _xOffset { get; set; }
+        private Int32 _xOffset { get; set; }
 
-        public int XOffset
+        public Int32 XOffset
         {
-            get
-            {
-                return _xOffset;
-            }
+            get => _xOffset;
             set
             {
                 _xOffset = value;
@@ -414,14 +387,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private int _yOffset { get; set; }
+        private Int32 _yOffset { get; set; }
 
-        public int YOffset
+        public Int32 YOffset
         {
-            get
-            {
-                return _yOffset;
-            }
+            get => _yOffset;
             set
             {
                 _yOffset = value;
@@ -430,14 +400,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private int _pollingInterval { get; set; }
+        private Int32 _pollingInterval { get; set; }
 
-        public int PollingInterval
+        public Int32 PollingInterval
         {
-            get
-            {
-                return _pollingInterval;
-            }
+            get => _pollingInterval;
             set
             {
                 _pollingInterval = value;
@@ -446,14 +413,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _useAppBar { get; set; }
+        private Boolean _useAppBar { get; set; }
 
-        public bool UseAppBar
+        public Boolean UseAppBar
         {
-            get
-            {
-                return _useAppBar;
-            }
+            get => _useAppBar;
             set
             {
                 _useAppBar = value;
@@ -462,14 +426,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _alwaysTop { get; set; }
+        private Boolean _alwaysTop { get; set; }
 
-        public bool AlwaysTop
+        public Boolean AlwaysTop
         {
-            get
-            {
-                return _alwaysTop;
-            }
+            get => _alwaysTop;
             set
             {
                 _alwaysTop = value;
@@ -478,14 +439,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _toolbarMode { get; set; }
+        private Boolean _toolbarMode { get; set; }
         
-        public bool ToolbarMode
+        public Boolean ToolbarMode
         {
-            get
-            {
-                return _toolbarMode;
-            }
+            get => _toolbarMode;
             set
             {
                 _toolbarMode = value;
@@ -494,14 +452,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _clickThrough { get; set; }
+        private Boolean _clickThrough { get; set; }
 
-        public bool ClickThrough
+        public Boolean ClickThrough
         {
-            get
-            {
-                return _clickThrough;
-            }
+            get => _clickThrough;
             set
             {
                 _clickThrough = value;
@@ -510,14 +465,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _showTrayIcon { get; set; }
+        private Boolean _showTrayIcon { get; set; }
 
-        public bool ShowTrayIcon
+        public Boolean ShowTrayIcon
         {
-            get
-            {
-                return _showTrayIcon;
-            }
+            get => _showTrayIcon;
             set
             {
                 _showTrayIcon = value;
@@ -526,14 +478,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _autoUpdate { get; set; }
+        private Boolean _autoUpdate { get; set; }
 
-        public bool AutoUpdate
+        public Boolean AutoUpdate
         {
-            get
-            {
-                return _autoUpdate;
-            }
+            get => _autoUpdate;
             set
             {
                 _autoUpdate = value;
@@ -542,14 +491,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _runAtStartup { get; set; }
+        private Boolean _runAtStartup { get; set; }
 
-        public bool RunAtStartup
+        public Boolean RunAtStartup
         {
-            get
-            {
-                return _runAtStartup;
-            }
+            get => _runAtStartup;
             set
             {
                 _runAtStartup = value;
@@ -558,14 +504,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private int _sidebarWidth { get; set; }
+        private Int32 _sidebarWidth { get; set; }
 
-        public int SidebarWidth
+        public Int32 SidebarWidth
         {
-            get
-            {
-                return _sidebarWidth;
-            }
+            get => _sidebarWidth;
             set
             {
                 _sidebarWidth = value;
@@ -574,14 +517,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _autoBGColor { get; set; }
+        private Boolean _autoBGColor { get; set; }
 
-        public bool AutoBGColor
+        public Boolean AutoBGColor
         {
-            get
-            {
-                return _autoBGColor;
-            }
+            get => _autoBGColor;
             set
             {
                 _autoBGColor = value;
@@ -590,14 +530,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _bgColor { get; set; }
+        private String _bgColor { get; set; }
 
-        public string BGColor
+        public String BGColor
         {
-            get
-            {
-                return _bgColor;
-            }
+            get => _bgColor;
             set
             {
                 _bgColor = value;
@@ -606,14 +543,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private double _bgOpacity { get; set; }
+        private Double _bgOpacity { get; set; }
 
-        public double BGOpacity
+        public Double BGOpacity
         {
-            get
-            {
-                return _bgOpacity;
-            }
+            get => _bgOpacity;
             set
             {
                 _bgOpacity = value;
@@ -626,10 +560,7 @@ namespace SidebarDiagnostics.Models
 
         public TextAlign TextAlign
         {
-            get
-            {
-                return _textAlign;
-            }
+            get => _textAlign;
             set
             {
                 _textAlign = value;
@@ -642,10 +573,7 @@ namespace SidebarDiagnostics.Models
 
         public TextAlignItem[] TextAlignItems
         {
-            get
-            {
-                return _textAlignItems;
-            }
+            get => _textAlignItems;
             set
             {
                 _textAlignItems = value;
@@ -658,10 +586,7 @@ namespace SidebarDiagnostics.Models
 
         public FontSetting FontSetting
         {
-            get
-            {
-                return _fontSetting;
-            }
+            get => _fontSetting;
             set
             {
                 _fontSetting = value;
@@ -674,10 +599,7 @@ namespace SidebarDiagnostics.Models
 
         public FontSetting[] FontSettingItems
         {
-            get
-            {
-                return _fontSettingItems;
-            }
+            get => _fontSettingItems;
             set
             {
                 _fontSettingItems = value;
@@ -686,14 +608,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _fontColor { get; set; }
+        private String _fontColor { get; set; }
 
-        public string FontColor
+        public String FontColor
         {
-            get
-            {
-                return _fontColor;
-            }
+            get => _fontColor;
             set
             {
                 _fontColor = value;
@@ -702,14 +621,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private string _alertFontColor { get; set; }
+        private String _alertFontColor { get; set; }
 
-        public string AlertFontColor
+        public String AlertFontColor
         {
-            get
-            {
-                return _alertFontColor;
-            }
+            get => _alertFontColor;
             set
             {
                 _alertFontColor = value;
@@ -718,14 +634,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _alertBlink { get; set; } = true;
+        private Boolean _alertBlink { get; set; } = true;
         
-        public bool AlertBlink
+        public Boolean AlertBlink
         {
-            get
-            {
-                return _alertBlink;
-            }
+            get => _alertBlink;
             set
             {
                 _alertBlink = value;
@@ -738,10 +651,7 @@ namespace SidebarDiagnostics.Models
 
         public DateSetting DateSetting
         {
-            get
-            {
-                return _dateSetting;
-            }
+            get => _dateSetting;
             set
             {
                 _dateSetting = value;
@@ -754,10 +664,7 @@ namespace SidebarDiagnostics.Models
 
         public DateSetting[] DateSettingItems
         {
-            get
-            {
-                return _dateSettingItems;
-            }
+            get => _dateSettingItems;
             set
             {
                 _dateSettingItems = value;
@@ -766,14 +673,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _collapseMenuBar { get; set; }
+        private Boolean _collapseMenuBar { get; set; }
 
-        public bool CollapseMenuBar
+        public Boolean CollapseMenuBar
         {
-            get
-            {
-                return _collapseMenuBar;
-            }
+            get => _collapseMenuBar;
             set
             {
                 _collapseMenuBar = value;
@@ -782,14 +686,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _initiallyHidden { get; set; }
+        private Boolean _initiallyHidden { get; set; }
         
-        public bool InitiallyHidden
+        public Boolean InitiallyHidden
         {
-            get
-            {
-                return _initiallyHidden;
-            }
+            get => _initiallyHidden;
             set
             {
                 _initiallyHidden = value;
@@ -798,14 +699,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _showClock { get; set; }
+        private Boolean _showClock { get; set; }
 
-        public bool ShowClock
+        public Boolean ShowClock
         {
-            get
-            {
-                return _showClock;
-            }
+            get => _showClock;
             set
             {
                 _showClock = value;
@@ -814,14 +712,11 @@ namespace SidebarDiagnostics.Models
             }
         }
 
-        private bool _clock24HR { get; set; }
+        private Boolean _clock24HR { get; set; }
 
-        public bool Clock24HR
+        public Boolean Clock24HR
         {
-            get
-            {
-                return _clock24HR;
-            }
+            get => _clock24HR;
             set
             {
                 _clock24HR = value;
@@ -834,10 +729,7 @@ namespace SidebarDiagnostics.Models
 
         public ObservableCollection<MonitorConfig> MonitorConfig
         {
-            get
-            {
-                return _monitorConfig;
-            }
+            get => _monitorConfig;
             set
             {
                 _monitorConfig = value;
@@ -874,10 +766,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey ToggleKey
         {
-            get
-            {
-                return _toggleKey;
-            }
+            get => _toggleKey;
             set
             {
                 _toggleKey = value;
@@ -890,10 +779,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey ShowKey
         {
-            get
-            {
-                return _showKey;
-            }
+            get => _showKey;
             set
             {
                 _showKey = value;
@@ -906,10 +792,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey HideKey
         {
-            get
-            {
-                return _hideKey;
-            }
+            get => _hideKey;
             set
             {
                 _hideKey = value;
@@ -922,10 +805,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey ReloadKey
         {
-            get
-            {
-                return _reloadKey;
-            }
+            get => _reloadKey;
             set
             {
                 _reloadKey = value;
@@ -938,10 +818,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey CloseKey
         {
-            get
-            {
-                return _closeKey;
-            }
+            get => _closeKey;
             set
             {
                 _closeKey = value;
@@ -954,10 +831,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey CycleEdgeKey
         {
-            get
-            {
-                return _cycleEdgeKey;
-            }
+            get => _cycleEdgeKey;
             set
             {
                 _cycleEdgeKey = value;
@@ -970,10 +844,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey CycleScreenKey
         {
-            get
-            {
-                return _cycleScreenKey;
-            }
+            get => _cycleScreenKey;
             set
             {
                 _cycleScreenKey = value;
@@ -986,10 +857,7 @@ namespace SidebarDiagnostics.Models
 
         public Hotkey ReserveSpaceKey
         {
-            get
-            {
-                return _reserveSpaceKey;
-            }
+            get => _reserveSpaceKey;
             set
             {
                 _reserveSpaceKey = value;
@@ -1003,20 +871,20 @@ namespace SidebarDiagnostics.Models
     {
         public DockEdge Value { get; set; }
 
-        public string Text { get; set; }
+        public String Text { get; set; }
     }
 
     public class ScreenItem
     {
-        public int Index { get; set; }
+        public Int32 Index { get; set; }
 
-        public string Text { get; set; }
+        public String Text { get; set; }
     }
 
     public class TextAlignItem
     {
         public TextAlign Value { get; set; }
 
-        public string Text { get; set; }
+        public String Text { get; set; }
     }
 }

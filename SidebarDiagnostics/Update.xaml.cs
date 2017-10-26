@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SidebarDiagnostics.Models;
-using SidebarDiagnostics.Windows;
 using SidebarDiagnostics.Style;
 
 namespace SidebarDiagnostics
@@ -20,7 +19,7 @@ namespace SidebarDiagnostics
             DataContext = Model = new UpdateModel();
         }
 
-        public void SetProgress(double percent)
+        public void SetProgress(Double percent)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
             {
@@ -56,6 +55,6 @@ namespace SidebarDiagnostics
 
         public UpdateModel Model { get; private set; }
 
-        private bool _close { get; set; } = false;
+        private Boolean _close { get; set; } = false;
     }
 }
